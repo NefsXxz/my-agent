@@ -6,24 +6,12 @@
 <meta name="theme-color" content="#0a0e1a">
 <title>My AI Agent</title>
 <style>
-:root {
-  --bg: #0a0e1a; --bg-elevated: #111827; --bg-panel: #161d2f; --bg-hover: #1f2940;
-  --border: #222c42; --border-strong: #2f3a56; --text: #e6edf3; --text-muted: #8b95aa; --text-dim: #5b6478;
-  --primary: #6366f1; --primary-hover: #818cf8; --primary-dim: rgba(99, 102, 241, 0.12);
-  --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
-  --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --gradient-soft: linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(139,92,246,.15) 100%);
-  --shadow-sm: 0 1px 2px rgba(0,0,0,.3); --shadow-md: 0 4px 12px rgba(0,0,0,.4); --shadow-lg: 0 12px 32px rgba(0,0,0,.5);
-  --radius: 10px; --radius-sm: 7px; --radius-lg: 14px;
-}
+/* CSS SAMA PERSIS KAYAK SEBELUMNYA, TIDAK ADA YANG BERUBAH */
+:root { --bg: #0a0e1a; --bg-elevated: #111827; --bg-panel: #161d2f; --bg-hover: #1f2940; --border: #222c42; --border-strong: #2f3a56; --text: #e6edf3; --text-muted: #8b95aa; --text-dim: #5b6478; --primary: #6366f1; --primary-hover: #818cf8; --primary-dim: rgba(99, 102, 241, 0.12); --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); --gradient-soft: linear-gradient(135deg, rgba(99,102,241,.15) 0%, rgba(139,92,246,.15) 100%); --shadow-sm: 0 1px 2px rgba(0,0,0,.3); --shadow-md: 0 4px 12px rgba(0,0,0,.4); --shadow-lg: 0 12px 32px rgba(0,0,0,.5); --radius: 10px; --radius-sm: 7px; --radius-lg: 14px; }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; overflow: hidden; }
 body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #3f4b68; }
-
+::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #3f4b68; }
 header { padding: 10px 14px; background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--bg-panel) 100%); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--border); flex-shrink: 0; box-shadow: 0 1px 0 rgba(255,255,255,.02); }
 .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; letter-spacing: -.3px; color: var(--text); margin-right: 4px; }
 .brand-dot { width: 26px; height: 26px; border-radius: 8px; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 2px 10px rgba(99,102,241,.4); }
@@ -32,11 +20,9 @@ header select:focus, header input:focus { border-color: var(--primary); box-shad
 header .btn-icon { cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
 header .btn-icon:hover { background: var(--bg-hover); border-color: var(--border-strong); transform: translateY(-1px); }
 header .btn-icon:active { transform: translateY(0); }
-header .btn-icon.danger { color: #fca5a5; }
-header .btn-icon.danger:hover { background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.4); }
+header .btn-icon.danger { color: #fca5a5; } header .btn-icon.danger:hover { background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.4); }
 header .btn-icon .badge { background: var(--primary-dim); color: var(--primary-hover); border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 700; min-width: 18px; text-align: center; }
 #model { flex: 1; min-width: 130px; }
-
 #tokenBar { padding: 8px 14px; background: var(--bg-elevated); border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: center; font-size: 11px; flex-shrink: 0; flex-wrap: wrap; }
 .stat { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); font-weight: 500; }
 .stat strong { color: var(--text); font-weight: 600; }
@@ -46,7 +32,6 @@ header .btn-icon .badge { background: var(--primary-dim); color: var(--primary-h
 @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 #quotaInfo { color: var(--success); white-space: nowrap; font-weight: 600; padding: 2px 8px; background: rgba(16,185,129,.1); border-radius: 4px; font-size: 10.5px; }
 #quotaInfo:empty { display: none; }
-
 .layout { flex: 1; display: flex; overflow: hidden; position: relative; }
 aside { width: 272px; background: var(--bg-elevated); overflow-y: auto; border-right: 1px solid var(--border); flex-shrink: 0; transition: transform .28s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; }
 .sb-section { padding: 12px 14px; border-bottom: 1px solid var(--border); }
@@ -56,7 +41,6 @@ aside { width: 272px; background: var(--bg-elevated); overflow-y: auto; border-r
 .btn-new { width: 100%; padding: 11px; background: var(--gradient); color: #fff; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 13px; font-family: inherit; transition: all .18s; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 14px rgba(99,102,241,.3); }
 .btn-new:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,.45); }
 .btn-new:active { transform: translateY(0); }
-
 .chat-item { padding: 9px 11px; background: transparent; border-radius: var(--radius-sm); margin-bottom: 3px; font-size: 12.5px; display: flex; justify-content: space-between; gap: 6px; align-items: center; cursor: pointer; transition: all .15s; border: 1px solid transparent; position: relative; overflow: hidden; }
 .chat-item:hover { background: var(--bg-hover); border-color: var(--border); }
 .chat-item.active { background: var(--gradient-soft); border-color: rgba(99,102,241,.35); color: var(--text); font-weight: 500; }
@@ -65,7 +49,6 @@ aside { width: 272px; background: var(--bg-elevated); overflow-y: auto; border-r
 .chat-item button { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 14px; padding: 2px 6px; flex-shrink: 0; border-radius: 4px; opacity: 0; transition: all .15s; }
 .chat-item:hover button { opacity: 1; }
 .chat-item button:hover { background: rgba(239,68,68,.15); color: var(--danger); }
-
 .file { padding: 7px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 4px; font-size: 11.5px; display: flex; justify-content: space-between; gap: 6px; align-items: center; transition: all .15s; }
 .file:hover { border-color: var(--border-strong); }
 .file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; color: var(--text); }
@@ -75,7 +58,6 @@ aside { width: 272px; background: var(--bg-elevated); overflow-y: auto; border-r
 aside input[type=file] { font-size: 11px; width: 100%; color: var(--text-muted); margin-top: 4px; }
 aside input[type=file]::file-selector-button { background: var(--bg-hover); color: var(--text); border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-sm); cursor: pointer; margin-right: 8px; font-size: 11.5px; font-weight: 500; transition: all .15s; font-family: inherit; }
 aside input[type=file]::file-selector-button:hover { background: var(--border); }
-
 main { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
 .msg { max-width: 82%; padding: 11px 15px; border-radius: var(--radius-lg); white-space: pre-wrap; word-wrap: break-word; line-height: 1.6; font-size: 14px; animation: msgIn .25s ease; position: relative; }
 @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -85,19 +67,15 @@ main { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direct
 .msg.tool { align-self: flex-start; background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.25); font-size: 11px; font-family: 'JetBrains Mono', ui-monospace, monospace; max-width: 100%; padding: 8px 12px; color: #6ee7b7; border-radius: var(--radius-sm); margin-left: 34px; }
 .msg.error { align-self: center; background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.35); color: #fca5a5; font-size: 13px; padding: 9px 14px; border-radius: var(--radius-sm); max-width: 90%; }
 .msg.memory { align-self: center; background: rgba(139,92,246,.1); border: 1px solid rgba(139,92,246,.3); font-size: 12px; padding: 7px 14px; color: #c4b5fd; border-radius: 20px; }
-
 .typing { align-self: flex-start; background: var(--bg-panel); border: 1px solid var(--border); padding: 14px 18px; border-radius: var(--radius-lg); border-bottom-left-radius: 4px; display: flex; gap: 4px; align-items: center; position: relative; }
 .typing::before { content: '🤖'; position: absolute; left: -34px; top: 12px; width: 26px; height: 26px; border-radius: 8px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; }
 .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); animation: typingBounce 1.4s infinite ease-in-out; }
-.typing span:nth-child(2) { animation-delay: .2s; }
-.typing span:nth-child(3) { animation-delay: .4s; }
+.typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
 @keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); opacity: .4; } 30% { transform: translateY(-6px); opacity: 1; } }
-
 #chatPlaceholder { color: var(--text-muted); text-align: center; margin: auto; font-size: 14px; padding: 40px 20px; line-height: 1.8; max-width: 420px; }
 #chatPlaceholder .ph-icon { font-size: 48px; margin-bottom: 16px; opacity: .6; display: block; }
 #chatPlaceholder .ph-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; letter-spacing: -.4px; }
 #chatPlaceholder .ph-sub { font-size: 13px; color: var(--text-dim); }
-
 footer { padding: 12px 16px; background: var(--bg-elevated); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
 footer textarea { flex: 1; padding: 11px 14px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg); color: var(--text); resize: none; min-height: 44px; max-height: 200px; font-family: inherit; font-size: 15px; line-height: 1.5; transition: all .15s; outline: none; overflow-y: auto; }
 footer textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-dim); }
@@ -108,9 +86,7 @@ footer button:active:not(:disabled) { transform: translateY(0); }
 footer button:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
 footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 #sidebarToggle { display: none; }
-
 .overlay { position: fixed; inset: 0; background: rgba(5, 8, 17, .75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; animation: fadeIn .2s ease; }
 .overlay.active { display: flex; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -134,29 +110,17 @@ footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,2
 .key-item button { width: auto; padding: 5px 12px; background: rgba(239,68,68,.15); color: #fca5a5; font-size: 12px; margin: 0; flex-shrink: 0; box-shadow: none; border: 1px solid rgba(239,68,68,.3); }
 .key-item button:hover { background: rgba(239,68,68,.25); transform: none; box-shadow: none; }
 .empty-state { color: var(--text-dim); font-size: 12.5px; padding: 16px 8px; text-align: center; line-height: 1.6; }
-
 @media (max-width: 768px) {
-  #sidebarToggle { display: flex; }
-  .brand span.brand-text { display: none; }
+  #sidebarToggle { display: flex; } .brand span.brand-text { display: none; }
   aside { position: absolute; left: 0; top: 0; bottom: 0; z-index: 50; transform: translateX(-100%); box-shadow: 4px 0 24px rgba(0,0,0,.6); width: 290px; }
   aside.open { transform: translateX(0); }
   aside::before { content: ''; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: -1; opacity: 0; transition: opacity .25s; pointer-events: none; left: 290px; }
   aside.open::before { opacity: 1; pointer-events: auto; }
-  main { padding: 14px 12px; }
-  .msg { max-width: 92%; }
-  .msg.assistant::before, .msg.tool { margin-left: 0; }
-  .msg.assistant::before { display: none; }
-  .msg.tool { margin-left: 8px; }
-  header { padding: 8px 10px; gap: 6px; }
-  header select, header input, header .btn-icon { padding: 6px 9px; font-size: 12px; }
-  #model { min-width: 90px; }
-  #tokenBar { font-size: 10px; padding: 6px 10px; gap: 10px; }
-  #tokenTrack { min-width: 60px; }
-  .stat strong { font-size: 10.5px; }
-  footer { padding: 10px 12px; gap: 8px; }
-  footer textarea { font-size: 16px; }
-  footer button { padding: 0 16px; }
-  .modal { padding: 22px 20px; }
+  main { padding: 14px 12px; } .msg { max-width: 92%; }
+  .msg.assistant::before, .msg.tool { margin-left: 0; } .msg.assistant::before { display: none; } .msg.tool { margin-left: 8px; }
+  header { padding: 8px 10px; gap: 6px; } header select, header input, header .btn-icon { padding: 6px 9px; font-size: 12px; }
+  #model { min-width: 90px; } #tokenBar { font-size: 10px; padding: 6px 10px; gap: 10px; } #tokenTrack { min-width: 60px; } .stat strong { font-size: 10.5px; }
+  footer { padding: 10px 12px; gap: 8px; } footer textarea { font-size: 16px; } footer button { padding: 0 16px; } .modal { padding: 22px 20px; }
 }
 </style>
 </head>
@@ -164,18 +128,19 @@ footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,2
 
 <header>
   <button id="sidebarToggle" class="btn-icon" onclick="toggleSidebar()" title="Menu">☰</button>
-  <div class="brand">
-    <div class="brand-dot">✨</div>
-    <span class="brand-text">AI Agent</span>
-  </div>
+  <div class="brand"><div class="brand-dot">✨</div><span class="brand-text">AI Agent</span></div>
+  
+  <!-- DROPDOWN PROVIDER LENGKAP -->
   <select id="provider" title="Provider">
     <option value="openai">OpenAI</option>
     <option value="anthropic">Anthropic (Claude)</option>
-    <option value="openrouter">OpenRouter</option>
+    <option value="deepseek">DeepSeek</option>
+    <option value="gemini">Google Gemini</option>
+    <option value="openrouter">OpenRouter (All Models)</option>
     <option value="groq">Groq</option>
   </select>
-  <!-- Kolom model diubah jadi input dengan datalist biar bisa pilih atau ketik manual -->
-  <input id="model" list="model-list" placeholder="Pilih atau ketik model...">
+  
+  <input id="model" list="model-list" placeholder="Pilih model...">
   <datalist id="model-list"></datalist>
   
   <button class="btn-icon" onclick="openMemory()" title="Memori AI">🧠 <span class="badge" id="memCount">0</span></button>
@@ -191,25 +156,12 @@ footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,2
 
 <div class="layout">
   <aside id="sidebar">
-    <div class="sb-section">
-      <button class="btn-new" onclick="newChat()">＋ Chat Baru</button>
-    </div>
-    <div class="sb-section">
-      <h3>💬 Chats <span class="count" id="chatCount">0</span></h3>
-      <div id="chatList"></div>
-    </div>
-    <div class="sb-section">
-      <h3>📁 Files <span class="count" id="fileCount">0</span>/20 · <span id="totalSize" style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-dim);">0 B</span></h3>
-      <input type="file" id="fileInput" multiple>
-      <div id="fileList" style="margin-top:8px;"></div>
-    </div>
+    <div class="sb-section"><button class="btn-new" onclick="newChat()">＋ Chat Baru</button></div>
+    <div class="sb-section"><h3>💬 Chats <span class="count" id="chatCount">0</span></h3><div id="chatList"></div></div>
+    <div class="sb-section"><h3>📁 Files <span class="count" id="fileCount">0</span>/20 · <span id="totalSize" style="font-weight:500;text-transform:none;letter-spacing:0;color:var(--text-dim);">0 B</span></h3><input type="file" id="fileInput" multiple><div id="fileList" style="margin-top:8px;"></div></div>
   </aside>
   <main id="chat">
-    <div id="chatPlaceholder">
-      <span class="ph-icon">✨</span>
-      <div class="ph-title">Mulai Percakapan</div>
-      <div class="ph-sub">AI ingat fakta tentangmu otomatis & bisa lihat chat lama.<br>Upload file di sidebar, lalu mulai chat.</div>
-    </div>
+    <div id="chatPlaceholder"><span class="ph-icon">✨</span><div class="ph-title">Mulai Percakapan</div><div class="ph-sub">AI ingat fakta tentangmu otomatis.</div></div>
   </main>
 </div>
 
@@ -219,26 +171,16 @@ footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,2
 </footer>
 
 <div id="loginOverlay" class="overlay active">
-  <div class="modal">
-    <h3>🔒 Masuk</h3>
-    <p class="hint">Masukkan password untuk mengakses agent kamu.</p>
-    <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password">
-    <button onclick="doLogin()">Masuk</button>
-    <div id="loginError" class="error"></div>
-  </div>
+  <div class="modal"><h3>🔒 Masuk</h3><p class="hint">Masukkan password.</p><input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"><button onclick="doLogin()">Masuk</button><div id="loginError" class="error"></div></div>
 </div>
 
 <div id="settingsOverlay" class="overlay">
   <div class="modal">
     <h3>⚙️ API Keys</h3>
-    <p class="hint">Key tersimpan aman di server. Tambah key per provider.</p>
     <div id="keyList" style="margin-bottom:14px;"></div>
-    <input id="newProvider" list="provider-list" placeholder="Provider (openai / anthropic / openrouter / groq)">
+    <input id="newProvider" list="provider-list" placeholder="Provider (openai / anthropic / deepseek / gemini / openrouter / groq)">
     <datalist id="provider-list">
-      <option value="openai"></option>
-      <option value="anthropic"></option>
-      <option value="openrouter"></option>
-      <option value="groq"></option>
+      <option value="openai"></option><option value="anthropic"></option><option value="deepseek"></option><option value="gemini"></option><option value="openrouter"></option><option value="groq"></option>
     </datalist>
     <input id="newKey" type="password" placeholder="API Key">
     <button onclick="saveKey()">Simpan</button>
@@ -247,14 +189,7 @@ footer button .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,2
 </div>
 
 <div id="memoryOverlay" class="overlay">
-  <div class="modal">
-    <h3>🧠 Memori AI</h3>
-    <p class="hint">Fakta yang diingat AI tentangmu. Dipakai otomatis di setiap chat.</p>
-    <div id="memoryList" style="margin-bottom:14px;max-height:40vh;overflow-y:auto;"></div>
-    <textarea id="newMemory" placeholder="Tambah fakta manual..."></textarea>
-    <button onclick="addMemory()">＋ Tambah</button>
-    <button class="secondary" onclick="closeMemory()">Tutup</button>
-  </div>
+  <div class="modal"><h3>🧠 Memori AI</h3><div id="memoryList" style="margin-bottom:14px;max-height:40vh;overflow-y:auto;"></div><textarea id="newMemory" placeholder="Tambah fakta manual..."></textarea><button onclick="addMemory()">＋ Tambah</button><button class="secondary" onclick="closeMemory()">Tutup</button></div>
 </div>
 
 <script>
@@ -264,9 +199,10 @@ const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&l
 const formatTokens = n => n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'k' : String(n);
 
 const MODEL_LIMITS = {
-  'gpt-4o-mini': 128000, 'gpt-4o': 128000, 'gpt-4-turbo': 128000, 'o1-mini': 128000, 'o1-preview': 128000,
+  'gpt-4o': 128000, 'gpt-4o-mini': 128000, 'o1-preview': 128000, 'o1-mini': 128000,
   'claude-3-5-sonnet-20241022': 200000, 'claude-3-5-haiku-20241022': 200000, 'claude-3-opus-20240229': 200000,
-  'openai/gpt-4o-mini': 128000, 'anthropic/claude-3.5-sonnet': 200000, 'google/gemini-flash-1.5': 1048576, 'meta-llama/llama-3.3-70b-instruct': 128000,
+  'deepseek-chat': 64000, 'deepseek-reasoner': 64000,
+  'gemini-2.0-flash': 1048576, 'gemini-1.5-pro': 2097152, 'gemini-1.5-flash': 1048576,
   'llama-3.3-70b-versatile': 128000, 'llama-3.1-8b-instant': 128000, 'mixtral-8x7b-32768': 32768
 };
 
@@ -307,8 +243,7 @@ const isTextFile = f => f.type.startsWith('text/') || /\.(md|txt|json|js|ts|jsx|
 async function refreshFiles() {
   const keys = await dbKeys(); files = [];
   for (const k of keys) { const m = await dbGet(k); if (m) files.push({ id: k, name: m.name, size: m.size, type: m.type, isText: m.isText }); }
-  $('#fileCount').textContent = files.length;
-  $('#totalSize').textContent = fmtSize(files.reduce((s, f) => s + f.size, 0));
+  $('#fileCount').textContent = files.length; $('#totalSize').textContent = fmtSize(files.reduce((s, f) => s + f.size, 0));
   const list = $('#fileList'); list.innerHTML = '';
   if (!files.length) { list.innerHTML = '<div class="empty-state">Belum ada file.</div>'; return; }
   files.forEach(f => {
@@ -322,8 +257,7 @@ async function refreshFiles() {
 }
 
 $('#fileInput').onchange = async e => {
-  const selected = Array.from(e.target.files);
-  let total = files.reduce((s, f) => s + f.size, 0);
+  const selected = Array.from(e.target.files); let total = files.reduce((s, f) => s + f.size, 0);
   for (const file of selected) {
     if (files.length >= MAX_FILES) { alert('Maksimal 20 file.'); break; }
     if (total + file.size > MAX_TOTAL) { alert('Total > 500MB.'); break; }
@@ -336,144 +270,74 @@ $('#fileInput').onchange = async e => {
 };
 
 const PROVIDER_MODELS = {
-  openai: ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'o1-preview', 'o1-mini'],
+  openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'],
   anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
-  openrouter: ['anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'google/gemini-flash-1.5', 'meta-llama/llama-3.3-70b-instruct', 'deepseek/deepseek-r1'],
+  deepseek: ['deepseek-chat', 'deepseek-reasoner'],
+  gemini: ['gemini-2.0-flash', 'gemini-1.5-pro', 'gemini-1.5-flash'],
+  openrouter: [
+    'deepseek/deepseek-r1', 'deepseek/deepseek-chat', 
+    'google/gemini-2.0-flash-001', 'google/gemini-1.5-pro', 
+    'anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 
+    'meta-llama/llama-3.3-70b-instruct', 'qwen/qwen-2.5-72b-instruct'
+  ],
   groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768']
 };
 
 function updateModel() {
-  const p = $('#provider').value;
-  const dl = $('#model-list');
+  const p = $('#provider').value; const dl = $('#model-list');
   dl.innerHTML = (PROVIDER_MODELS[p] || []).map(m => `<option value="${m}">`).join('');
   const saved = localStorage.getItem('agent_model_' + p);
   $('#model').value = saved || (PROVIDER_MODELS[p]?.[0] || '');
   updateTokenBar();
 }
 $('#provider').value = localStorage.getItem('agent_provider') || 'openai';
-$('#provider').onchange = () => {
-  localStorage.setItem('agent_provider', $('#provider').value);
-  updateModel(); quotaRemaining = null; quotaLimit = null; fetchQuota();
-};
+$('#provider').onchange = () => { localStorage.setItem('agent_provider', $('#provider').value); updateModel(); quotaRemaining = null; quotaLimit = null; fetchQuota(); };
 $('#model').onchange = () => { localStorage.setItem('agent_model_' + $('#provider').value, $('#model').value); updateTokenBar(); };
 updateModel();
 
 function toggleSidebar() { $('#sidebar').classList.toggle('open'); }
-document.addEventListener('click', e => {
-  if (window.innerWidth > 768) return;
-  const sb = $('#sidebar'); if (!sb.classList.contains('open')) return;
-  if (sb.contains(e.target) || e.target.closest('#sidebarToggle')) return;
-  sb.classList.remove('open');
-});
+document.addEventListener('click', e => { if (window.innerWidth > 768) return; const sb = $('#sidebar'); if (!sb.classList.contains('open')) return; if (sb.contains(e.target) || e.target.closest('#sidebarToggle')) return; sb.classList.remove('open'); });
 
-async function doLogin() {
-  const password = $('#loginPassword').value; if (!password) return;
-  const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) });
-  if (r.ok) { $('#loginError').textContent = ''; $('#loginPassword').value = ''; await bootAfterLogin(); }
-  else $('#loginError').textContent = 'Password salah';
-}
+async function doLogin() { const password = $('#loginPassword').value; if (!password) return; const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) }); if (r.ok) { $('#loginError').textContent = ''; $('#loginPassword').value = ''; await bootAfterLogin(); } else $('#loginError').textContent = 'Password salah'; }
 $('#loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 async function doLogout() { await fetch('/api/logout', { method: 'POST' }); location.reload(); }
 async function checkAuth() { const r = await fetch('/api/keys'); return r.status !== 401; }
 
 async function openSettings() { $('#settingsOverlay').classList.add('active'); await loadKeys(); }
 function closeSettings() { $('#settingsOverlay').classList.remove('active'); }
-async function loadKeys() {
-  const r = await fetch('/api/keys'); if (r.status === 401) { closeSettings(); $('#loginOverlay').classList.add('active'); return; }
-  const keys = await r.json(); const el = $('#keyList');
-  el.innerHTML = Object.keys(keys).length ? Object.entries(keys).map(([p, k]) => `<div class="key-item"><div style="flex:1;min-width:0;"><div class="provider-name">${p}</div><code>${k}</code></div><button onclick="delKey('${p}')">Hapus</button></div>`).join('') : '<div class="empty-state">Belum ada key.</div>';
-}
-async function saveKey() {
-  const provider = $('#newProvider').value.trim().toLowerCase(); const key = $('#newKey').value.trim();
-  if (!provider || !key) return alert('Isi provider dan key');
-  const r = await fetch('/api/keys', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider, key }) });
-  if (r.ok) { $('#newKey').value = ''; $('#newProvider').value = ''; await loadKeys(); await fetchQuota(); }
-  else alert('Gagal simpan');
-}
+async function loadKeys() { const r = await fetch('/api/keys'); if (r.status === 401) { closeSettings(); $('#loginOverlay').classList.add('active'); return; } const keys = await r.json(); const el = $('#keyList'); el.innerHTML = Object.keys(keys).length ? Object.entries(keys).map(([p, k]) => `<div class="key-item"><div style="flex:1;min-width:0;"><div class="provider-name">${p}</div><code>${k}</code></div><button onclick="delKey('${p}')">Hapus</button></div>`).join('') : '<div class="empty-state">Belum ada key.</div>'; }
+async function saveKey() { const provider = $('#newProvider').value.trim().toLowerCase(); const key = $('#newKey').value.trim(); if (!provider || !key) return alert('Isi provider dan key'); const r = await fetch('/api/keys', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider, key }) }); if (r.ok) { $('#newKey').value = ''; $('#newProvider').value = ''; await loadKeys(); await fetchQuota(); } else alert('Gagal simpan'); }
 async function delKey(p) { if (!confirm('Hapus key ' + p + '?')) return; await fetch('/api/keys', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider: p }) }); await loadKeys(); }
 
-async function fetchQuota() {
-  const provider = $('#provider').value;
-  if (provider === 'openrouter') { try { const r = await fetch('/api/quota?provider=openrouter'); if (r.ok) { const d = await r.json(); quotaRemaining = d.limit_remaining; quotaLimit = d.limit; } } catch (e) {} }
-  else if (provider !== 'groq') quotaRemaining = null;
-  updateTokenBar();
-}
+async function fetchQuota() { const provider = $('#provider').value; if (provider === 'openrouter') { try { const r = await fetch('/api/quota?provider=openrouter'); if (r.ok) { const d = await r.json(); quotaRemaining = d.limit_remaining; quotaLimit = d.limit; } } catch (e) {} } else if (provider !== 'groq') quotaRemaining = null; updateTokenBar(); }
 
 let memoryFacts = [];
 async function openMemory() { await loadMemory(); renderMemory(); $('#memoryOverlay').classList.add('active'); }
 function closeMemory() { $('#memoryOverlay').classList.remove('active'); }
 async function loadMemory() { const r = await fetch('/api/memory'); if (r.status === 401) return; memoryFacts = await r.json(); $('#memCount').textContent = memoryFacts.length; }
-function renderMemory() {
-  const el = $('#memoryList');
-  el.innerHTML = memoryFacts.length ? memoryFacts.map(m => `<div class="key-item"><span style="color:var(--text);line-height:1.5;">${escapeHtml(m.text)}</span><button onclick="delMemory('${m.id}')">Hapus</button></div>`).join('') : '<div class="empty-state">Belum ada memori.</div>';
-}
-async function addMemory() {
-  const text = $('#newMemory').value.trim(); if (!text) return;
-  await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
-  $('#newMemory').value = ''; await loadMemory(); renderMemory();
-}
+function renderMemory() { const el = $('#memoryList'); el.innerHTML = memoryFacts.length ? memoryFacts.map(m => `<div class="key-item"><span style="color:var(--text);line-height:1.5;">${escapeHtml(m.text)}</span><button onclick="delMemory('${m.id}')">Hapus</button></div>`).join('') : '<div class="empty-state">Belum ada memori.</div>'; }
+async function addMemory() { const text = $('#newMemory').value.trim(); if (!text) return; await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) }); $('#newMemory').value = ''; await loadMemory(); renderMemory(); }
 async function delMemory(id) { await fetch(`/api/memory?id=${id}`, { method: 'DELETE' }); await loadMemory(); renderMemory(); }
 
-async function loadChats() {
-  const r = await fetch('/api/chats'); if (r.status === 401) { $('#loginOverlay').classList.add('active'); return; }
-  chats = await r.json(); $('#chatCount').textContent = chats.length; renderChats();
-}
-function renderChats() {
-  const el = $('#chatList');
-  el.innerHTML = chats.length ? chats.map(c => `<div class="chat-item ${c.id === currentChatId ? 'active' : ''}" onclick="switchChat('${c.id}')"><span>${escapeHtml(c.title || 'Untitled')}</span><button onclick="event.stopPropagation();deleteChat('${c.id}')">✕</button></div>`).join('') : '<div class="empty-state">Belum ada chat.</div>';
-}
-async function newChat() {
-  const r = await fetch('/api/chats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'Chat Baru' }) });
-  const chat = await r.json(); currentChatId = chat.id; messages = []; resetUsage(); renderMessages(); await loadChats();
-  if (window.innerWidth <= 768) $('#sidebar').classList.remove('open'); $('#input').focus();
-}
-async function switchChat(id) {
-  currentChatId = id; const r = await fetch(`/api/chats?id=${id}`); if (!r.ok) { alert('Gagal load chat'); return; }
-  const chat = await r.json(); messages = chat.messages || []; resetUsage(); renderMessages(); renderChats();
-  if (window.innerWidth <= 768) $('#sidebar').classList.remove('open');
-}
-async function deleteChat(id) {
-  if (!confirm('Hapus chat ini?')) return; await fetch(`/api/chats?id=${id}`, { method: 'DELETE' });
-  if (currentChatId === id) { currentChatId = null; messages = []; resetUsage(); renderMessages(); }
-  await loadChats(); if (chats.length > 0) await switchChat(chats[0].id); else await newChat();
-}
-async function saveCurrentChat() {
-  if (!currentChatId) return; let title; const cur = chats.find(c => c.id === currentChatId);
-  if (cur && (cur.title === 'Chat Baru' || !cur.title)) { const first = messages.find(m => m.role === 'user'); if (first) title = first.content.slice(0, 60) + (first.content.length > 60 ? '…' : ''); }
-  const body = { messages }; if (title) body.title = title;
-  await fetch(`/api/chats?id=${currentChatId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-  await loadChats();
-}
+async function loadChats() { const r = await fetch('/api/chats'); if (r.status === 401) { $('#loginOverlay').classList.add('active'); return; } chats = await r.json(); $('#chatCount').textContent = chats.length; renderChats(); }
+function renderChats() { const el = $('#chatList'); el.innerHTML = chats.length ? chats.map(c => `<div class="chat-item ${c.id === currentChatId ? 'active' : ''}" onclick="switchChat('${c.id}')"><span>${escapeHtml(c.title || 'Untitled')}</span><button onclick="event.stopPropagation();deleteChat('${c.id}')">✕</button></div>`).join('') : '<div class="empty-state">Belum ada chat.</div>'; }
+async function newChat() { const r = await fetch('/api/chats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'Chat Baru' }) }); const chat = await r.json(); currentChatId = chat.id; messages = []; resetUsage(); renderMessages(); await loadChats(); if (window.innerWidth <= 768) $('#sidebar').classList.remove('open'); $('#input').focus(); }
+async function switchChat(id) { currentChatId = id; const r = await fetch(`/api/chats?id=${id}`); if (!r.ok) { alert('Gagal load chat'); return; } const chat = await r.json(); messages = chat.messages || []; resetUsage(); renderMessages(); renderChats(); if (window.innerWidth <= 768) $('#sidebar').classList.remove('open'); }
+async function deleteChat(id) { if (!confirm('Hapus chat ini?')) return; await fetch(`/api/chats?id=${id}`, { method: 'DELETE' }); if (currentChatId === id) { currentChatId = null; messages = []; resetUsage(); renderMessages(); } await loadChats(); if (chats.length > 0) await switchChat(chats[0].id); else await newChat(); }
+async function saveCurrentChat() { if (!currentChatId) return; let title; const cur = chats.find(c => c.id === currentChatId); if (cur && (cur.title === 'Chat Baru' || !cur.title)) { const first = messages.find(m => m.role === 'user'); if (first) title = first.content.slice(0, 60) + (first.content.length > 60 ? '…' : ''); } const body = { messages }; if (title) body.title = title; await fetch(`/api/chats?id=${currentChatId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); await loadChats(); }
 
 function renderMessages() {
   const chatEl = $('#chat'); chatEl.innerHTML = '';
   if (messages.length === 0) { chatEl.innerHTML = `<div id="chatPlaceholder"><span class="ph-icon">✨</span><div class="ph-title">Chat Baru</div><div class="ph-sub">Mulai ketik pesan di bawah 👇<br>AI otomatis mengingat fakta tentangmu.</div></div>`; return; }
-  for (const m of messages) {
-    if (m.role === 'system') continue;
-    if (m.role === 'user') addMsgEl('user', m.content);
-    else if (m.role === 'assistant') {
-      if (m.content) addMsgEl('assistant', m.content);
-      if (m.tool_calls) for (const tc of m.tool_calls) addMsgEl('tool', `🔧 ${tc.function.name}(${String(tc.function.arguments).slice(0, 120)})`);
-    }
-  }
+  for (const m of messages) { if (m.role === 'system') continue; if (m.role === 'user') addMsgEl('user', m.content); else if (m.role === 'assistant') { if (m.content) addMsgEl('assistant', m.content); if (m.tool_calls) for (const tc of m.tool_calls) addMsgEl('tool', `🔧 ${tc.function.name}(${String(tc.function.arguments).slice(0, 120)})`); } }
 }
-function addMsgEl(role, content) {
-  const ph = $('#chatPlaceholder'); if (ph) ph.remove();
-  const div = document.createElement('div'); div.className = 'msg ' + role; div.textContent = content;
-  $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight;
-}
+function addMsgEl(role, content) { const ph = $('#chatPlaceholder'); if (ph) ph.remove(); const div = document.createElement('div'); div.className = 'msg ' + role; div.textContent = content; $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight; }
 function showTyping() { removeTyping(); const div = document.createElement('div'); div.id = 'typingIndicator'; div.className = 'typing'; div.innerHTML = '<span></span><span></span><span></span>'; $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight; }
 function removeTyping() { const el = $('#typingIndicator'); if (el) el.remove(); }
-function setSendBusy(isBusy) {
-  const btn = $('#send'); btn.disabled = isBusy;
-  if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>';
-}
+function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>'; }
 
 const SYSTEM_PROMPT = `Kamu adalah AI agent yang membantu user. User bisa mengupload file dan menyimpan chat lama.
-Gunakan tool-tool berikut bila perlu:
-- list_files, read_file, search_files: untuk akses file yang diupload user
-- list_recent_chats, read_chat: untuk melihat percakapan sebelumnya
-- remember: untuk menyimpan fakta penting tentang user
+Gunakan tool-tool berikut bila perlu: list_files, read_file, search_files, list_recent_chats, read_chat, remember.
 Selalu jawab dalam bahasa yang sama dengan user.`;
 
 const TOOLS = [
@@ -486,73 +350,29 @@ const TOOLS = [
 
 async function callTool(name, a) {
   if (name === 'list_files') return files.length ? files.map(f => `${f.name} (${fmtSize(f.size)}, ${f.isText ? 'text' : 'binary'})`).join('\n') : 'Tidak ada file.';
-  if (name === 'read_file') {
-    const f = files.find(x => x.name === a.name);
-    if (!f) return `File "${a.name}" tidak ditemukan. Tersedia: ${files.map(x => x.name).join(', ') || '(kosong)'}`;
-    if (!f.isText) return `File "${a.name}" bukan text.`;
-    const d = await dbGet(f.id); const offset = a.offset || 0, limit = Math.min(a.limit || 8000, 20000);
-    return `[${f.name} | total ${d.content.length} char | offset ${offset}]\n${d.content.slice(offset, offset + limit)}`;
-  }
-  if (name === 'search_files') {
-    const q = a.query.toLowerCase(); const out = [];
-    for (const f of files) { if (!f.isText) continue; const d = await dbGet(f.id); const i = d.content.toLowerCase().indexOf(q); if (i >= 0) out.push(`=== ${f.name} ===\n...${d.content.slice(Math.max(0, i - 80), i + 160)}...`); }
-    return out.length ? out.join('\n\n') : 'Tidak ada hasil.';
-  }
-  if (name === 'list_recent_chats') {
-    const r = await fetch('/api/chats'); const list = await r.json(); const lim = a.limit || 5;
-    return list.slice(0, lim).map(c => `[${c.id}] ${c.title} (${new Date(c.updatedAt).toLocaleDateString('id-ID')})`).join('\n') || 'Belum ada chat.';
-  }
-  if (name === 'read_chat') {
-    const r = await fetch(`/api/chats?id=${a.id}`); if (!r.ok) return 'Chat tidak ditemukan.';
-    const chat = await r.json(); const msgs = (chat.messages || []).filter(m => m.role === 'user' || m.role === 'assistant').slice(-(a.limit || 20));
-    return `=== ${chat.title} ===\n\n` + msgs.map(m => `${m.role.toUpperCase()}: ${String(m.content || '').slice(0, 500)}`).join('\n\n');
-  }
-  if (name === 'remember') {
-    if (!a.text || !a.text.trim()) return 'Gagal: teks kosong.';
-    const r = await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: a.text }) });
-    if (r.ok) { await loadMemory(); addMsgEl('memory', `🧠 Diingat: ${a.text}`); return `✓ Tersimpan: "${a.text}"`; }
-    return 'Gagal menyimpan memori.';
-  }
+  if (name === 'read_file') { const f = files.find(x => x.name === a.name); if (!f) return `File "${a.name}" tidak ditemukan. Tersedia: ${files.map(x => x.name).join(', ') || '(kosong)'}`; if (!f.isText) return `File "${a.name}" bukan text.`; const d = await dbGet(f.id); const offset = a.offset || 0, limit = Math.min(a.limit || 8000, 20000); return `[${f.name} | total ${d.content.length} char | offset ${offset}]\n${d.content.slice(offset, offset + limit)}`; }
+  if (name === 'search_files') { const q = a.query.toLowerCase(); const out = []; for (const f of files) { if (!f.isText) continue; const d = await dbGet(f.id); const i = d.content.toLowerCase().indexOf(q); if (i >= 0) out.push(`=== ${f.name} ===\n...${d.content.slice(Math.max(0, i - 80), i + 160)}...`); } return out.length ? out.join('\n\n') : 'Tidak ada hasil.'; }
+  if (name === 'list_recent_chats') { const r = await fetch('/api/chats'); const list = await r.json(); const lim = a.limit || 5; return list.slice(0, lim).map(c => `[${c.id}] ${c.title} (${new Date(c.updatedAt).toLocaleDateString('id-ID')})`).join('\n') || 'Belum ada chat.'; }
+  if (name === 'read_chat') { const r = await fetch(`/api/chats?id=${a.id}`); if (!r.ok) return 'Chat tidak ditemukan.'; const chat = await r.json(); const msgs = (chat.messages || []).filter(m => m.role === 'user' || m.role === 'assistant').slice(-(a.limit || 20)); return `=== ${chat.title} ===\n\n` + msgs.map(m => `${m.role.toUpperCase()}: ${String(m.content || '').slice(0, 500)}`).join('\n\n'); }
+  if (name === 'remember') { if (!a.text || !a.text.trim()) return 'Gagal: teks kosong.'; const r = await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: a.text }) }); if (r.ok) { await loadMemory(); addMsgEl('memory', `🧠 Diingat: ${a.text}`); return `✓ Tersimpan: "${a.text}"`; } return 'Gagal menyimpan memori.'; }
   return 'Tool tidak dikenal.';
 }
 
 async function send() {
-  if (busy) return;
-  const text = $('#input').value.trim(); if (!text) return;
-  if (!currentChatId) await newChat();
-  const provider = $('#provider').value; const model = $('#model').value.trim();
-  if (!model) return alert('Isi nama model');
-
-  busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto';
-  addMsgEl('user', text); messages.push({ role: 'user', content: text }); showTyping();
-
+  if (busy) return; const text = $('#input').value.trim(); if (!text) return; if (!currentChatId) await newChat();
+  const provider = $('#provider').value; const model = $('#model').value.trim(); if (!model) return alert('Isi nama model');
+  busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto'; addMsgEl('user', text); messages.push({ role: 'user', content: text }); showTyping();
   try {
     for (let guard = 0; guard < 12; guard++) {
-      const res = await fetch('/api/chat', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ provider, model, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages], tools: TOOLS })
-      });
+      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider, model, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages], tools: TOOLS }) });
       if (res.status === 401) { removeTyping(); addMsgEl('error', '❌ Sesi habis, login ulang.'); $('#loginOverlay').classList.add('active'); break; }
       if (!res.ok) { const errText = await res.text(); throw new Error(`${res.status}: ${errText.slice(0, 300)}`); }
-      if (provider === 'groq') {
-        const rem = res.headers.get('X-Agent-Quota-Remaining'); const lim = res.headers.get('X-Agent-Quota-Limit');
-        if (rem !== null) quotaRemaining = parseInt(rem); if (lim !== null) quotaLimit = parseInt(lim);
-      }
+      if (provider === 'groq') { const rem = res.headers.get('X-Agent-Quota-Remaining'); const lim = res.headers.get('X-Agent-Quota-Limit'); if (rem !== null) quotaRemaining = parseInt(rem); if (lim !== null) quotaLimit = parseInt(lim); }
       const data = await res.json();
       if (data.usage) { sessionUsage.total += (data.usage.total_tokens || 0); lastContextTokens = (data.usage.prompt_tokens || 0) + (data.usage.completion_tokens || 0); updateTokenBar(); }
-      const msg = data.choices?.[0]?.message;
-      if (!msg) throw new Error('Response LLM tidak valid');
-      messages.push(msg);
-      if (msg.tool_calls?.length) {
-        removeTyping();
-        for (const tc of msg.tool_calls) {
-          const args = JSON.parse(tc.function.arguments || '{}');
-          addMsgEl('tool', `🔧 ${tc.function.name}(${JSON.stringify(args).slice(0, 120)})`);
-          const result = await callTool(tc.function.name, args);
-          messages.push({ role: 'tool', tool_call_id: tc.id, content: result });
-        }
-        showTyping();
-      } else { removeTyping(); addMsgEl('assistant', msg.content || '(kosong)'); break; }
+      const msg = data.choices?.[0]?.message; if (!msg) throw new Error('Response LLM tidak valid'); messages.push(msg);
+      if (msg.tool_calls?.length) { removeTyping(); for (const tc of msg.tool_calls) { const args = JSON.parse(tc.function.arguments || '{}'); addMsgEl('tool', `🔧 ${tc.function.name}(${JSON.stringify(args).slice(0, 120)})`); const result = await callTool(tc.function.name, args); messages.push({ role: 'tool', tool_call_id: tc.id, content: result }); } showTyping(); }
+      else { removeTyping(); addMsgEl('assistant', msg.content || '(kosong)'); break; }
     }
   } catch (e) { removeTyping(); addMsgEl('error', '❌ ' + e.message); }
   finally { removeTyping(); busy = false; setSendBusy(false); if (currentChatId) await saveCurrentChat(); if (provider === 'openrouter') fetchQuota(); updateTokenBar(); }
@@ -561,10 +381,7 @@ async function send() {
 $('#input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); send(); } });
 $('#input').addEventListener('input', function() { this.style.height = 'auto'; this.style.height = Math.min(this.scrollHeight, 200) + 'px'; });
 
-async function bootAfterLogin() {
-  $('#loginOverlay').classList.remove('active'); await loadChats(); await loadMemory(); await fetchQuota();
-  if (chats.length > 0) await switchChat(chats[0].id); else await newChat();
-}
+async function bootAfterLogin() { $('#loginOverlay').classList.remove('active'); await loadChats(); await loadMemory(); await fetchQuota(); if (chats.length > 0) await switchChat(chats[0].id); else await newChat(); }
 (async () => { await openDB(); await refreshFiles(); const ok = await checkAuth(); if (!ok) { $('#loginOverlay').classList.add('active'); return; } await bootAfterLogin(); })();
 </script>
 </body>

@@ -92,6 +92,14 @@ footer button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 .key-item code { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--success); }
 .empty-state { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px; }
 #sidebarToggle { display: none; }
+
+/* CSS BARU UNTUK LINK SUMBER */
+.sources-container { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.sources-title { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.sources-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.source-pill { display: inline-flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 6px 12px; border-radius: 16px; font-size: 12px; color: var(--text); text-decoration: none; transition: 0.2s; }
+.source-pill:hover { background: rgba(99,102,241,0.15); border-color: var(--primary); color: var(--primary-hover); transform: translateY(-1px); }
+
 @media (max-width: 768px) {
   #sidebarToggle { display: flex; } .brand span.brand-text { display: none; }
   aside { position: absolute; left: 0; top: 0; bottom: 0; transform: translateX(-100%); width: 290px; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
@@ -188,6 +196,7 @@ const DB_NAME = 'ai_agent', STORE = 'files';
 const MAX_FILES = 20, MAX_TOTAL = 500 * 1024 * 1024;
 let chats = [], currentChatId = null, messages = [], busy = false;
 let sessionUsage = { total: 0 }, lastContextTokens = 0, quotaRemaining = null, quotaLimit = null;
+let activeSearchSources = []; // Variabel untuk nyimpen link hasil pencarian
 
 function resetUsage() { sessionUsage = { total: 0 }; lastContextTokens = 0; updateTokenBar(); }
 function updateTokenBar() {
@@ -278,25 +287,88 @@ async function saveCurrentChat() { if (!currentChatId) return; let title; const 
 function renderMessages() {
   const chatEl = $('#chat'); chatEl.innerHTML = '';
   if (messages.length === 0) { chatEl.innerHTML = `<div id="chatPlaceholder"><span class="ph-icon">🚀</span><div class="ph-title">Chat Baru</div><div class="ph-sub">Mulai ketik pesan di bawah.</div></div>`; return; }
-  for (const m of messages) { if (m.role === 'system') continue; if (m.role === 'user') addMsgEl('user', m.content); else if (m.role === 'assistant') { if (m.content) addMsgEl('assistant', m.content); if (m.tool_calls) for (const tc of m.tool_calls) addMsgEl('tool', `🔧 ${tc.function.name}(${String(tc.function.arguments).slice(0, 120)})`); } }
+  
+  for (let i = 0; i < messages.length; i++) {
+    const m = messages[i];
+    if (m.role === 'system') continue;
+    if (m.role === 'user') addMsgEl('user', m.content);
+    else if (m.role === 'assistant') {
+      if (m.content) {
+        // Ekstrak sumber dari tool messages sebelumnya
+        let histSources = [];
+        const toolMsgs = messages.slice(0, i).filter(x => x.role === 'tool');
+        toolMsgs.forEach(tm => {
+          const regex = /Sumber: (https?:\/\/[^\s]+)/g;
+          let match;
+          while ((match = regex.exec(tm.content)) !== null) histSources.push({ url: match[1] });
+        });
+        addMsgEl('assistant', m.content, histSources);
+      }
+      if (m.tool_calls) for (const tc of m.tool_calls) addMsgEl('tool', `🔧 ${tc.function.name}(${String(tc.function.arguments).slice(0, 120)})`);
+    }
+  }
 }
-function addMsgEl(role, content) { const ph = $('#chatPlaceholder'); if (ph) ph.remove(); const div = document.createElement('div'); div.className = 'msg ' + role; div.textContent = content; $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight; }
+
+// Update fungsi ini untuk nampilin kotak link
+function addMsgEl(role, content, sources = []) {
+  const ph = $('#chatPlaceholder'); if (ph) ph.remove();
+  const div = document.createElement('div'); div.className = 'msg ' + role;
+  
+  const textNode = document.createElement('div');
+  textNode.textContent = content;
+  div.appendChild(textNode);
+
+  // Render Link Sumber
+  if (role === 'assistant' && sources && sources.length > 0) {
+    const uniqueSources = [];
+    const seen = new Set();
+    sources.forEach(s => {
+      if (s.url && !seen.has(s.url)) { seen.add(s.url); uniqueSources.push(s); }
+    });
+
+    if (uniqueSources.length > 0) {
+      const sourceDiv = document.createElement('div');
+      sourceDiv.className = 'sources-container';
+      sourceDiv.innerHTML = `<div class="sources-title">🌐 Sumber Referensi</div>`;
+      
+      const list = document.createElement('div');
+      list.className = 'sources-list';
+      uniqueSources.forEach((s, idx) => {
+        const a = document.createElement('a');
+        a.href = s.url;
+        a.target = '_blank';
+        a.className = 'source-pill';
+        try {
+          const domain = new URL(s.url).hostname.replace('www.', '');
+          a.textContent = `[${idx + 1}] ${domain}`;
+        } catch (e) {
+          a.textContent = `[${idx + 1}] Link`;
+        }
+        list.appendChild(a);
+      });
+      sourceDiv.appendChild(list);
+      div.appendChild(sourceDiv);
+    }
+  }
+
+  $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight;
+}
+
 function showTyping() { removeTyping(); const div = document.createElement('div'); div.id = 'typingIndicator'; div.className = 'typing'; div.innerHTML = '<span></span><span></span><span></span>'; $('#chat').appendChild(div); $('#chat').scrollTop = $('#chat').scrollHeight; }
 function removeTyping() { const el = $('#typingIndicator'); if (el) el.remove(); }
 function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>'; }
 
 const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file dan menyimpan chat lama. 
 Gunakan tool 'search_internet' jika user bertanya tentang berita terkini, fakta terbaru, atau hal yang kamu tidak yakin. 
-Jangan pernah membalas dengan kosong. Jika pencarian gagal, katakan dengan jujur bahwa kamu tidak bisa menemukan informasinya saat ini.
-Jawab dengan gaya bahasa yang natural dan profesional, kamu adalah seorang developer, dan suka ngereverse engineering sebuah game yang sudah mati.`;
+Jangan pernah membalas dengan kosong. Jika pencarian gagal, katakan dengan jujur bahwa kamu tidak bisa menemukan informasinya saat ini.`;
+
 const TOOLS = [
   { type: 'function', function: { name: 'list_files', description: 'Tampilkan daftar file', parameters: { type: 'object', properties: {} } } },
   { type: 'function', function: { name: 'read_file', description: 'Baca isi file text.', parameters: { type: 'object', properties: { name: { type: 'string' }, offset: { type: 'integer' }, limit: { type: 'integer' } }, required: ['name'] } } },
   { type: 'function', function: { name: 'search_files', description: 'Cari kata kunci di file', parameters: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } } },
   { type: 'function', function: { name: 'list_recent_chats', description: 'Daftar chat sebelumnya', parameters: { type: 'object', properties: { limit: { type: 'integer' } } } } },
   { type: 'function', function: { name: 'read_chat', description: 'Baca isi chat lama', parameters: { type: 'object', properties: { id: { type: 'string' }, limit: { type: 'integer' } }, required: ['id'] } } },
-  // TAMBAHAN TOOL SEARCH INTERNET
-  { type: 'function', function: { name: 'search_internet', description: 'Cari informasi terbaru di internet menggunakan mesin pencari. Gunakan ini jika kamu butuh berita terkini, fakta terbaru, atau informasi yang tidak ada di pengetahuanmu.', parameters: { type: 'object', properties: { query: { type: 'string', description: 'Kata kunci pencarian' } }, required: ['query'] } } }
+  { type: 'function', function: { name: 'search_internet', description: 'Cari informasi terbaru di internet.', parameters: { type: 'object', properties: { query: { type: 'string', description: 'Kata kunci pencarian' } }, required: ['query'] } } }
 ];
 
 async function callTool(name, a) {
@@ -307,15 +379,19 @@ async function callTool(name, a) {
   if (name === 'read_chat') { const r = await fetch(`/api/chats?id=${a.id}`); if (!r.ok) return 'Chat tidak ditemukan.'; const chat = await r.json(); const msgs = (chat.messages || []).filter(m => m.role === 'user' || m.role === 'assistant').slice(-(a.limit || 20)); return `=== ${chat.title} ===\n\n` + msgs.map(m => `${m.role.toUpperCase()}: ${String(m.content || '').slice(0, 500)}`).join('\n\n'); }
   if (name === 'remember') { if (!a.text || !a.text.trim()) return 'Gagal.'; const r = await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: a.text }) }); if (r.ok) { await loadMemory(); addMsgEl('memory', `🧠 Diingat: ${a.text}`); return `✓ Tersimpan.`; } return 'Gagal.'; }
   
-  // HANDLER SEARCH INTERNET
   if (name === 'search_internet') {
-    const r = await fetch('/api/search', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: a.query })
-    });
+    const r = await fetch('/api/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query: a.query }) });
     if (!r.ok) return 'Gagal mencari di internet.';
     const data = await r.json();
     if (data.error) return `Error pencarian: ${data.error}`;
+    
+    // Simpan URL ke variabel global biar bisa ditampilin di UI
+    if (data.results) {
+      data.results.forEach(res => {
+        if (res.url) activeSearchSources.push({ url: res.url });
+      });
+    }
+    
     return data.results.map(x => `- ${x.title}\n${x.content}\nSumber: ${x.url}`).join('\n\n');
   }
   
@@ -325,32 +401,49 @@ async function callTool(name, a) {
 async function send() {
   if (busy) return; const text = $('#input').value.trim(); if (!text) return; if (!currentChatId) await newChat();
   const provider = $('#provider').value; const model = $('#model').value; if (!model) return alert('Pilih model');
-  busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto'; addMsgEl('user', text); messages.push({ role: 'user', content: text }); showTyping();
+  
+  busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto'; 
+  addMsgEl('user', text); messages.push({ role: 'user', content: text }); 
+  
+  activeSearchSources = []; // Reset link sebelum chat baru
+  showTyping();
+  
   try {
     for (let guard = 0; guard < 12; guard++) {
-            // Ambil tanggal & jam real-time dari device user
       const now = new Date();
       const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
       const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-      
-      // Sisipkan info ini ke System Prompt
-      const dynamicPrompt = SYSTEM_PROMPT + `\n\n[INFO REAL-TIME]: Hari ini adalah ${dateStr}, pukul ${timeStr} (Waktu Lokal User). JIKA user bertanya tentang tanggal atau waktu, LANGSUNG jawab menggunakan info ini. JANGAN menebak atau mencari di internet untuk urusan tanggal.`;
+      const dynamicPrompt = SYSTEM_PROMPT + `\n\n[INFO REAL-TIME]: Hari ini adalah ${dateStr}, pukul ${timeStr} (Waktu Lokal User). JIKA user bertanya tentang tanggal atau waktu, LANGSUNG jawab menggunakan info ini.`;
 
       const res = await fetch('/api/chat', { 
         method: 'POST', headers: { 'Content-Type': 'application/json' }, 
-        body: JSON.stringify({ 
-          provider, model, 
-          messages: [{ role: 'system', content: dynamicPrompt }, ...messages], // <-- Pakai dynamicPrompt
-          tools: TOOLS 
-        }) 
+        body: JSON.stringify({ provider, model, messages: [{ role: 'system', content: dynamicPrompt }, ...messages], tools: TOOLS }) 
       });
+      
       if (res.status === 401) { removeTyping(); addMsgEl('error', '❌ Sesi habis.'); $('#loginOverlay').classList.add('active'); break; }
       if (!res.ok) { const errText = await res.text(); throw new Error(`${res.status}: ${errText.slice(0, 200)}`); }
       const data = await res.json();
+      
       if (data.usage) { sessionUsage.total += (data.usage.total_tokens || 0); lastContextTokens = (data.usage.prompt_tokens || 0) + (data.usage.completion_tokens || 0); updateTokenBar(); }
       const msg = data.choices?.[0]?.message; if (!msg) throw new Error('Response LLM tidak valid'); messages.push(msg);
-      if (msg.tool_calls?.length) { removeTyping(); for (const tc of msg.tool_calls) { const args = JSON.parse(tc.function.arguments || '{}'); addMsgEl('tool', `🔧 ${tc.function.name}(${JSON.stringify(args).slice(0, 80)})`); const result = await callTool(tc.function.name, args); messages.push({ role: 'tool', tool_call_id: tc.id, content: result }); } showTyping(); }
-      else { removeTyping(); addMsgEl('assistant', msg.content || '(kosong)'); break; }
+      
+      if (msg.tool_calls?.length) { 
+        removeTyping(); 
+        for (const tc of msg.tool_calls) { 
+          const args = JSON.parse(tc.function.arguments || '{}'); 
+          addMsgEl('tool', `🔧 ${tc.function.name}(${JSON.stringify(args).slice(0, 80)})`); 
+          const result = await callTool(tc.function.name, args); 
+          messages.push({ role: 'tool', tool_call_id: tc.id, content: result }); 
+        } 
+        showTyping(); 
+      }
+      else { 
+        removeTyping(); 
+        // Tempelkan activeSearchSources ke fungsi render
+        addMsgEl('assistant', msg.content || '(kosong)', activeSearchSources); 
+        activeSearchSources = []; // Bersihkan setelah dipakai
+        break; 
+      }
     }
   } catch (e) { removeTyping(); addMsgEl('error', '❌ ' + e.message); }
   finally { removeTyping(); busy = false; setSendBusy(false); if (currentChatId) await saveCurrentChat(); updateTokenBar(); }

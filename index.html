@@ -4,14 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0A0A0A">
-<title>AI Agent // PORTFOLIO.EXE</title>
+<title>AI Agent // PHANTOM UI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* =========================================
-   VARIABEL & RESET (PERSONA 5 STYLE)
-========================================= */
 :root {
   --red: #E60012;
   --red-dark: #A8000D;
@@ -20,7 +17,6 @@
   --white: #FFFFFF;
   --off-white: #F4F4F0;
   --yellow: #FFD400;
-  
   --border-thick: 3px solid var(--black);
   --border-red: 3px solid var(--red);
   --hard-shadow: 6px 6px 0 var(--black);
@@ -34,7 +30,6 @@ html, body {
   overflow: hidden; 
   font-family: 'Space Grotesk', sans-serif; 
   background-color: var(--black);
-  /* Pola Halftone Dots ala Komik */
   background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
   background-size: 15px 15px;
   color: var(--white); 
@@ -48,124 +43,49 @@ html, body {
 ::-webkit-scrollbar-thumb { background: var(--red); border: 2px solid var(--black); }
 ::-webkit-scrollbar-thumb:hover { background: var(--yellow); }
 
-/* Typography */
-h1, h2, h3, .brand-text, .btn-icon, button, .title-font {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 1px;
-}
+h1, h2, h3, .brand-text, .btn-icon, button, .title-font { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
 .font-anton { font-family: 'Anton', sans-serif; letter-spacing: 0px; }
 
-/* =========================================
-   HEADER (GAME UI STYLE)
-========================================= */
-header { 
-  padding: 10px 20px; 
-  background: var(--black); 
-  border-bottom: var(--border-red); 
-  display: flex; gap: 12px; align-items: center; flex-wrap: wrap; 
-  z-index: 10;
-  position: relative;
-}
-header::after {
-  content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 3px; background: var(--black); z-index: -1;
-}
+header { padding: 10px 20px; background: var(--black); border-bottom: var(--border-red); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; z-index: 10; position: relative; }
+header::after { content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 3px; background: var(--black); z-index: -1; }
 
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; margin-right: 8px; }
-.brand-icon { 
-  width: 36px; height: 36px; background: var(--red); color: var(--white);
-  display: flex; align-items: center; justify-content: center; font-size: 20px; 
-  border: var(--border-thick); box-shadow: 3px 3px 0 var(--white);
-  transform: rotate(-5deg);
-}
+.brand-icon { width: 36px; height: 36px; background: var(--red); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 20px; border: var(--border-thick); box-shadow: 3px 3px 0 var(--white); transform: rotate(-5deg); }
 
 .select-wrapper { position: relative; display: flex; align-items: center; }
 .select-icon { position: absolute; left: 10px; font-size: 16px; pointer-events: none; }
-header select, header input, .btn-icon { 
-  padding: 8px 12px; 
-  border: var(--border-thick); 
-  background: var(--off-white); 
-  color: var(--black); 
-  font-size: 15px; 
-  font-family: inherit; 
-  font-weight: 700;
-  outline: none; 
-  appearance: none; 
-  transition: transform 0.1s, box-shadow 0.1s; 
-}
+header select, header input, .btn-icon { padding: 8px 12px; border: var(--border-thick); background: var(--off-white); color: var(--black); font-size: 15px; font-family: inherit; font-weight: 700; outline: none; appearance: none; transition: transform 0.1s, box-shadow 0.1s; }
 header select:focus, header input:focus { border-color: var(--red); }
 
 header select.with-icon { padding-left: 34px; min-width: 170px; cursor: pointer; }
 header select:not(.with-icon) { cursor: pointer; }
 #model { flex: 1; min-width: 160px; }
 
-.btn-icon { 
-  cursor: pointer; display: inline-flex; align-items: center; gap: 6px; 
-  background: var(--red); color: var(--white); border-color: var(--black);
-  box-shadow: 3px 3px 0 var(--black);
-  transform: translate(0,0);
-}
+.btn-icon { cursor: pointer; display: inline-flex; align-items: center; gap: 6px; background: var(--red); color: var(--white); border-color: var(--black); box-shadow: 3px 3px 0 var(--black); transform: translate(0,0); }
 .btn-icon:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
 .btn-icon:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--black); }
 .btn-icon.danger { background: var(--yellow); color: var(--black); }
+.badge { background: var(--black); color: var(--yellow); border: 2px solid var(--yellow); padding: 1px 6px; font-size: 13px; font-weight: bold; }
 
-.badge { 
-  background: var(--black); color: var(--yellow); 
-  border: 2px solid var(--yellow);
-  padding: 1px 6px; font-size: 13px; font-weight: bold; 
-}
-
-/* =========================================
-   TOKEN BAR
-========================================= */
-#tokenBar { 
-  padding: 8px 20px; 
-  background: var(--black-2); 
-  border-bottom: 2px dashed var(--off-white); 
-  display: flex; gap: 16px; align-items: center; font-size: 13px; flex-shrink: 0; 
-}
+#tokenBar { padding: 8px 20px; background: var(--black-2); border-bottom: 2px dashed var(--off-white); display: flex; gap: 16px; align-items: center; font-size: 13px; flex-shrink: 0; }
 .stat { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--off-white); text-transform: uppercase;}
 #tokenTrack { flex: 1; height: 10px; background: var(--black); border: 2px solid var(--off-white); overflow: hidden; min-width: 100px; }
 #tokenFill { height: 100%; width: 0%; background: var(--red); transition: width 0.4s ease; }
 #quotaInfo { color: var(--black); font-weight: 800; background: var(--yellow); padding: 2px 8px; border: 2px solid var(--black); font-size: 12px; transform: rotate(-2deg); }
 #quotaInfo:empty { display: none; }
 
-/* =========================================
-   LAYOUT & SIDEBAR (RANSOM NOTE)
-========================================= */
 .layout { flex: 1; display: flex; overflow: hidden; position: relative; }
 
-aside { 
-  width: 280px; 
-  background: var(--black-2); 
-  border-right: 4px solid var(--red); 
-  flex-shrink: 0; 
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-  display: flex; flex-direction: column; 
-  z-index: 5; 
-}
+aside { width: 280px; background: var(--black-2); border-right: 4px solid var(--red); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 5; }
 .sb-section { padding: 16px; border-bottom: 2px dashed #333; }
 .sb-section:last-child { border-bottom: none; flex: 1; overflow-y: auto; }
 .sb-section h3 { font-size: 18px; color: var(--yellow); margin-bottom: 12px; display: flex; justify-content: space-between; text-transform: uppercase; }
 
-.btn-new { 
-  width: 100%; padding: 12px; 
-  background: var(--red); color: var(--white); 
-  border: var(--border-thick); cursor: pointer; font-size: 18px; 
-  transition: 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; 
-  box-shadow: 4px 4px 0 var(--white);
-  text-transform: uppercase;
-}
+.btn-new { width: 100%; padding: 12px; background: var(--red); color: var(--white); border: var(--border-thick); cursor: pointer; font-size: 18px; transition: 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 4px 4px 0 var(--white); text-transform: uppercase; }
 .btn-new:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--white); }
 .btn-new:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--white); }
 
-.chat-item { 
-  padding: 10px 12px; background: var(--off-white); color: var(--black); 
-  margin-bottom: 8px; font-size: 14px; font-weight: 600;
-  display: flex; justify-content: space-between; align-items: center; gap: 8px; 
-  cursor: pointer; border: var(--border-thick); 
-  transition: 0.15s; position: relative; overflow: hidden;
-  box-shadow: 3px 3px 0 var(--red);
-}
+.chat-item { padding: 10px 12px; background: var(--off-white); color: var(--black); margin-bottom: 8px; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; border: var(--border-thick); transition: 0.15s; position: relative; overflow: hidden; box-shadow: 3px 3px 0 var(--red); }
 .chat-item:nth-child(even) { transform: rotate(1deg); }
 .chat-item:nth-child(odd) { transform: rotate(-1deg); }
 .chat-item:hover { transform: scale(1.02) rotate(0deg); box-shadow: 5px 5px 0 var(--yellow); background: var(--white); }
@@ -182,111 +102,42 @@ aside input[type=file] { font-size: 12px; width: 100%; color: var(--off-white); 
 aside input[type=file]::file-selector-button { background: var(--off-white); color: var(--black); border: var(--border-thick); padding: 6px 10px; cursor: pointer; font-weight: bold; font-family: inherit; transition: 0.1s; }
 aside input[type=file]::file-selector-button:hover { background: var(--yellow); }
 
-/* =========================================
-   MAIN CHAT AREA (GRAPHIC NOVEL)
-========================================= */
 main { flex: 1; overflow-y: auto; padding: 30px 20px; display: flex; flex-direction: column; gap: 24px; scroll-behavior: smooth; position: relative; }
 
-.msg { 
-  max-width: 85%; padding: 16px 20px; 
-  line-height: 1.5; font-size: 16px; font-weight: 500;
-  position: relative; animation: slideUp 0.2s ease; word-wrap: break-word; 
-  border: var(--border-thick);
-}
+.msg { max-width: 85%; padding: 16px 20px; line-height: 1.5; font-size: 16px; font-weight: 500; position: relative; animation: slideUp 0.2s ease; word-wrap: break-word; border: var(--border-thick); }
 @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.msg.user { 
-  align-self: flex-end; 
-  background: var(--red); color: var(--white); 
-  box-shadow: -5px -5px 0 var(--black); 
-  transform: rotate(1deg);
-}
-.msg.assistant { 
-  align-self: flex-start; 
-  background: var(--off-white); color: var(--black); 
-  box-shadow: 5px 5px 0 var(--black); 
-  transform: rotate(-1deg);
-}
-.msg.assistant::before { 
-  content: 'AI //'; position: absolute; left: 10px; top: -12px; 
-  background: var(--yellow); color: var(--black); 
-  font-family: 'Bebas Neue'; font-size: 16px; font-weight: bold;
-  padding: 2px 8px; border: 2px solid var(--black);
-  transform: rotate(-3deg);
-}
+.msg.user { align-self: flex-end; background: var(--red); color: var(--white); box-shadow: -5px -5px 0 var(--black); transform: rotate(1deg); }
+.msg.assistant { align-self: flex-start; background: var(--off-white); color: var(--black); box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg); }
+.msg.assistant::before { content: 'AI //'; position: absolute; left: 10px; top: -12px; background: var(--yellow); color: var(--black); font-family: 'Bebas Neue'; font-size: 16px; font-weight: bold; padding: 2px 8px; border: 2px solid var(--black); transform: rotate(-3deg); }
 
-.msg.tool { 
-  align-self: flex-start; background: var(--black); border: 2px dashed var(--yellow); 
-  font-size: 13px; font-family: monospace; color: var(--yellow); 
-  padding: 8px 12px; margin-left: 20px;
-}
-.msg.error { 
-  align-self: center; background: var(--yellow); border: var(--border-thick); color: var(--black); 
-  font-size: 14px; font-weight: 700; padding: 12px 20px; text-align: center; box-shadow: 4px 4px 0 var(--black); 
-  transform: rotate(-2deg);
-}
-.msg.memory { 
-  align-self: center; background: var(--off-white); border: 2px solid var(--red); color: var(--red); 
-  font-size: 13px; font-weight: bold; padding: 6px 16px; transform: rotate(2deg); box-shadow: 3px 3px 0 var(--black);
-}
+.msg.tool { align-self: flex-start; background: var(--black); border: 2px dashed var(--yellow); font-size: 13px; font-family: monospace; color: var(--yellow); padding: 8px 12px; margin-left: 20px; }
+.msg.error { align-self: center; background: var(--yellow); border: var(--border-thick); color: var(--black); font-size: 14px; font-weight: 700; padding: 12px 20px; text-align: center; box-shadow: 4px 4px 0 var(--black); transform: rotate(-2deg); }
+.msg.memory { align-self: center; background: var(--off-white); border: 2px solid var(--red); color: var(--red); font-size: 13px; font-weight: bold; padding: 6px 16px; transform: rotate(2deg); box-shadow: 3px 3px 0 var(--black); }
 
-/* Typing Indicator */
-.typing { 
-  align-self: flex-start; background: var(--off-white); border: var(--border-thick); 
-  padding: 16px 20px; display: flex; gap: 6px; align-items: center; 
-  box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg);
-}
+.typing { align-self: flex-start; background: var(--off-white); border: var(--border-thick); padding: 16px 20px; display: flex; gap: 6px; align-items: center; box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg); }
 .typing::before { content: 'THINKING...'; font-family: 'Bebas Neue'; color: var(--black); margin-right: 10px; font-size: 16px; }
 .typing span { width: 8px; height: 8px; background: var(--red); animation: bounce 1s infinite alternate; }
 .typing span:nth-child(2) { animation-delay: 0.2s; }
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
 
-#chatPlaceholder { 
-  color: var(--off-white); text-align: center; margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; 
-  border: 4px dashed var(--red); padding: 40px; transform: rotate(-2deg); background: rgba(0,0,0,0.5);
-}
+#chatPlaceholder { color: var(--off-white); text-align: center; margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; border: 4px dashed var(--red); padding: 40px; transform: rotate(-2deg); background: rgba(0,0,0,0.5); }
 #chatPlaceholder .ph-icon { font-size: 60px; color: var(--yellow); margin-bottom: 10px; font-family: 'Anton'; }
 #chatPlaceholder .ph-title { font-size: 32px; font-family: 'Anton'; letter-spacing: 2px; color: var(--white); text-transform: uppercase; }
 #chatPlaceholder .ph-sub { font-size: 16px; font-weight: 600; }
 
-/* =========================================
-   FOOTER & INPUT (CONSOLE)
-========================================= */
-footer { 
-  padding: 16px 20px; 
-  background: var(--black-2); 
-  border-top: 4px solid var(--red); 
-  display: flex; flex-direction: column; gap: 12px; 
-  flex-shrink: 0; 
-}
+footer { padding: 16px 20px; background: var(--black-2); border-top: 4px solid var(--red); display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
 .input-row { display: flex; gap: 12px; align-items: flex-end; width: 100%; }
 
-footer textarea { 
-  flex: 1; padding: 14px 20px; 
-  border: var(--border-thick); 
-  background: var(--off-white); color: var(--black); 
-  resize: none; min-height: 54px; max-height: 200px; 
-  font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600;
-  line-height: 1.4; outline: none; 
-}
+footer textarea { flex: 1; padding: 14px 20px; border: var(--border-thick); background: var(--off-white); color: var(--black); resize: none; min-height: 54px; max-height: 200px; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.4; outline: none; }
 footer textarea:focus { border-color: var(--yellow); box-shadow: inset 0 0 0 2px var(--yellow); }
 
-footer .btn-attach { 
-  height: 54px; width: 54px; background: var(--yellow); border: var(--border-thick); color: var(--black); 
-  display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; flex-shrink: 0; 
-  transition: 0.1s; box-shadow: 3px 3px 0 var(--black);
-}
+footer .btn-attach { height: 54px; width: 54px; background: var(--yellow); border: var(--border-thick); color: var(--black); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; flex-shrink: 0; transition: 0.1s; box-shadow: 3px 3px 0 var(--black); }
 footer .btn-attach:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--black); }
 footer .btn-attach:active { transform: translate(2px,2px); box-shadow: none; }
 
-footer button#send { 
-  height: 54px; padding: 0 30px; 
-  background: var(--red); color: var(--white); border: var(--border-thick); 
-  cursor: pointer; font-size: 24px; font-family: 'Bebas Neue';
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
-  box-shadow: 4px 4px 0 var(--black); transition: 0.1s; text-transform: uppercase;
-}
+footer button#send { height: 54px; padding: 0 30px; background: var(--red); color: var(--white); border: var(--border-thick); cursor: pointer; font-size: 24px; font-family: 'Bebas Neue'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 4px 4px 0 var(--black); transition: 0.1s; text-transform: uppercase; }
 footer button#send:hover:not(:disabled) { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); background: var(--yellow); color: var(--black); }
 footer button#send:active:not(:disabled) { transform: translate(2px,2px); box-shadow: 0px 0px 0 var(--black); }
 footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
@@ -298,32 +149,14 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 .msg-link { color: var(--red); font-weight: 700; text-decoration: underline; }
 .msg-link:hover { color: var(--yellow); background: var(--black); padding: 0 4px; }
 
-/* =========================================
-   MODALS (RANSOM / COMIC PANELS)
-========================================= */
-.overlay { 
-  position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); 
-  display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; 
-}
+.overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
 .overlay.active { display: flex; }
-.modal { 
-  background: var(--off-white); color: var(--black); border: 4px solid var(--black); 
-  padding: 24px; width: 100%; max-width: 480px; 
-  box-shadow: 12px 12px 0 var(--red); animation: scaleIn 0.2s cubic-bezier(.17,.89,.32,1.28); 
-}
+.modal { background: var(--off-white); color: var(--black); border: 4px solid var(--black); padding: 24px; width: 100%; max-width: 480px; box-shadow: 12px 12px 0 var(--red); animation: scaleIn 0.2s cubic-bezier(.17,.89,.32,1.28); }
 @keyframes scaleIn { from { transform: scale(0.8) rotate(5deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 .modal h3 { font-size: 28px; margin-bottom: 16px; text-transform: uppercase; border-bottom: 4px solid var(--red); padding-bottom: 8px; }
-.modal input, .modal textarea { 
-  width: 100%; padding: 12px; margin-bottom: 12px; 
-  background: var(--white); border: 3px solid var(--black); color: var(--black); 
-  font-size: 15px; font-family: inherit; font-weight: 600; outline: none; 
-}
+.modal input, .modal textarea { width: 100%; padding: 12px; margin-bottom: 12px; background: var(--white); border: 3px solid var(--black); color: var(--black); font-size: 15px; font-family: inherit; font-weight: 600; outline: none; }
 .modal input:focus, .modal textarea:focus { border-color: var(--red); box-shadow: 0 0 0 2px var(--red); }
-.modal button { 
-  width: 100%; padding: 14px; background: var(--black); color: var(--white); 
-  border: 3px solid var(--black); cursor: pointer; font-size: 20px; 
-  margin-bottom: 8px; transition: 0.1s; font-family: 'Bebas Neue'; letter-spacing: 1px;
-}
+.modal button { width: 100%; padding: 14px; background: var(--black); color: var(--white); border: 3px solid var(--black); cursor: pointer; font-size: 20px; margin-bottom: 8px; transition: 0.1s; font-family: 'Bebas Neue'; letter-spacing: 1px; }
 .modal button:hover { background: var(--red); transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--black); }
 .modal button:active { transform: translate(2px,2px); box-shadow: none; }
 .modal button.secondary { background: var(--off-white); color: var(--black); border: 3px solid var(--black); }
@@ -333,45 +166,24 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 .key-item code { background: var(--black); padding: 4px 8px; font-size: 12px; color: var(--yellow); font-family: monospace; }
 .empty-state { color: var(--black); font-size: 15px; font-weight: 600; text-align: center; padding: 20px; border: 2px dashed var(--black); }
 
-/* Spinner */
 .spinner { width: 20px; height: 20px; border: 3px solid var(--black); border-top-color: var(--white); animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* =========================================
-   SOURCE PILL (PERPLEXITY STYLE REVAMPED)
-========================================= */
 .sources-container { margin-top: 16px; }
-.source-pill-new {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--yellow); color: var(--black);
-  border: 3px solid var(--black); padding: 6px 14px 6px 6px;
-  cursor: pointer; transition: 0.1s; font-size: 14px; font-weight: 800;
-  box-shadow: 3px 3px 0 var(--black); text-transform: uppercase;
-}
+.source-pill-new { display: inline-flex; align-items: center; gap: 10px; background: var(--yellow); color: var(--black); border: 3px solid var(--black); padding: 6px 14px 6px 6px; cursor: pointer; transition: 0.1s; font-size: 14px; font-weight: 800; box-shadow: 3px 3px 0 var(--black); text-transform: uppercase; }
 .source-pill-new:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); background: var(--white); }
 .source-pill-new:active { transform: translate(2px, 2px); box-shadow: none; }
 .favicon-stack { display: flex; align-items: center; }
-.favicon-stack img {
-  width: 22px; height: 22px; border: 2px solid var(--black); background: #fff; object-fit: contain;
-}
+.favicon-stack img { width: 22px; height: 22px; border: 2px solid var(--black); background: #fff; object-fit: contain; }
 .favicon-stack img:not(:first-child) { margin-left: -8px; }
 
-/* Modal List Sumber */
-.source-list-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; background: var(--white); border: 3px solid var(--black);
-  margin-bottom: 8px; text-decoration: none; color: var(--black); transition: 0.1s;
-  box-shadow: 3px 3px 0 var(--red);
-}
+.source-list-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--white); border: 3px solid var(--black); margin-bottom: 8px; text-decoration: none; color: var(--black); transition: 0.1s; box-shadow: 3px 3px 0 var(--red); }
 .source-list-item:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--red); background: var(--yellow); }
 .source-list-item img { width: 24px; height: 24px; border: 2px solid var(--black); background: #fff; }
 .source-list-item div { display: flex; flex-direction: column; overflow: hidden; }
 .source-list-item .src-title { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .source-list-item .src-domain { font-size: 12px; font-weight: 600; color: var(--red); }
 
-/* =========================================
-   MOBILE RESPONSIVE
-========================================= */
 #sidebarToggle { display: none; }
 
 @media (max-width: 768px) {
@@ -412,6 +224,7 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
       <option value="gemini">Google Gemini</option>
       <option value="openrouter">OpenRouter</option>
       <option value="groq">Groq</option>
+      <option value="howtofix">HowToFix</option>
     </select>
   </div>
   
@@ -487,8 +300,8 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   <div class="modal">
     <h3>// API KEYS</h3>
     <div id="keyList" style="margin-bottom:20px;"></div>
-    <input id="newProvider" list="provider-list" placeholder="PROVIDER (openai / anthropic / deepseek / gemini / openrouter / groq)">
-    <datalist id="provider-list"><option value="openai"></option><option value="anthropic"></option><option value="deepseek"></option><option value="gemini"></option><option value="openrouter"></option><option value="groq"></option></datalist>
+    <input id="newProvider" list="provider-list" placeholder="PROVIDER (openai / anthropic / deepseek / gemini / openrouter / groq / howtofix)">
+    <datalist id="provider-list"><option value="openai"></option><option value="anthropic"></option><option value="deepseek"></option><option value="gemini"></option><option value="openrouter"></option><option value="groq"></option><option value="howtofix"></option></datalist>
     <input id="newKey" type="password" placeholder="API KEY">
     <button onclick="saveKey()">SAVE</button>
     <button class="secondary" onclick="closeSettings()">CLOSE</button>
@@ -506,7 +319,7 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 </div>
 
 <!-- =========================================
-     JAVASCRIPT LOGIC (SAMA PERSIS)
+     JAVASCRIPT LOGIC
 ========================================= -->
 <script>
 const $ = s => document.querySelector(s);
@@ -514,9 +327,17 @@ const fmtSize = b => b < 1024 ? b + ' B' : b < 1048576 ? (b/1024).toFixed(1) + '
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const formatTokens = n => n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'k' : String(n);
 
-const PROVIDER_ICONS = { openai: '🤖', anthropic: '🧠', deepseek: '🐳', gemini: '✨', openrouter: '🔀', groq: '⚡' };
+const PROVIDER_ICONS = { openai: '🤖', anthropic: '🧠', deepseek: '🐳', gemini: '✨', openrouter: '🔀', groq: '⚡', howtofix: '🔧' };
 const MODEL_LIMITS = { 'gpt-4o': 128000, 'gpt-4o-mini': 128000, 'o1-preview': 128000, 'o1-mini': 128000, 'claude-3-5-sonnet-20241022': 200000, 'claude-3-5-haiku-20241022': 200000, 'claude-3-opus-20240229': 200000, 'deepseek-chat': 64000, 'deepseek-reasoner': 64000, 'gemini-4-argon': 1048576, 'gemini-3.8-flash': 1048576, 'gemini-3.7-flash': 1048576, 'gemini-3.6-flash': 1048576, 'gemini-3.5-flash-lite': 1048576, 'llama-3.3-70b-versatile': 128000, 'llama-3.1-8b-instant': 128000, 'mixtral-8x7b-32768': 32768 };
-const PROVIDER_MODELS = { openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'], anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'], deepseek: ['deepseek-chat', 'deepseek-reasoner'], gemini: ['gemini-3.6-flash', 'gemini-4-argon', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'], openrouter: ['deepseek/deepseek-r1', 'google/gemini-1.5-pro', 'anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'meta-llama/llama-3.3-70b-instruct'], groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'] };
+const PROVIDER_MODELS = { 
+  openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'], 
+  anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'], 
+  deepseek: ['deepseek-chat', 'deepseek-reasoner'], 
+  gemini: ['gemini-3.6-flash', 'gemini-4-argon', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'], 
+  openrouter: ['deepseek/deepseek-r1', 'google/gemini-1.5-pro', 'anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'meta-llama/llama-3.3-70b-instruct'], 
+  groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'],
+  howtofix: ['gpt-4o', 'gpt-4o-mini', 'claude-3.5-sonnet', 'deepseek-v3', 'llama-3.3-70b', 'gemini-1.5-pro']
+};
 
 let db, files = [];
 const DB_NAME = 'ai_agent', STORE = 'files';

@@ -328,7 +328,22 @@ async function send() {
   busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto'; addMsgEl('user', text); messages.push({ role: 'user', content: text }); showTyping();
   try {
     for (let guard = 0; guard < 12; guard++) {
-      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ provider, model, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages], tools: TOOLS }) });
+            // Ambil tanggal & jam real-time dari device user
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+      
+      // Sisipkan info ini ke System Prompt
+      const dynamicPrompt = SYSTEM_PROMPT + `\n\n[INFO REAL-TIME]: Hari ini adalah ${dateStr}, pukul ${timeStr} (Waktu Lokal User). JIKA user bertanya tentang tanggal atau waktu, LANGSUNG jawab menggunakan info ini. JANGAN menebak atau mencari di internet untuk urusan tanggal.`;
+
+      const res = await fetch('/api/chat', { 
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ 
+          provider, model, 
+          messages: [{ role: 'system', content: dynamicPrompt }, ...messages], // <-- Pakai dynamicPrompt
+          tools: TOOLS 
+        }) 
+      });
       if (res.status === 401) { removeTyping(); addMsgEl('error', '❌ Sesi habis.'); $('#loginOverlay').classList.add('active'); break; }
       if (!res.ok) { const errText = await res.text(); throw new Error(`${res.status}: ${errText.slice(0, 200)}`); }
       const data = await res.json();

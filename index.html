@@ -273,7 +273,15 @@ const PROVIDER_MODELS = {
   openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'],
   anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
   deepseek: ['deepseek-chat', 'deepseek-reasoner'],
-  gemini: ['gemini-3.8-flash', 'gemini-4-argon', 'gemini-3.6-flash', 'gemini-3.5-flash-lite'],
+  gemini: [
+    'gemini-4-argon',           // Model flagship terbaru
+    'gemini-3.8-flash',         // Model default yang cerdas
+    'gemini-3.7-flash',         // Varian Flash
+    'gemini-3.6-flash',         // Generasi sebelumnya, stabil
+    'gemini-3.5-flash-lite',    // Paling cepat & hemat
+    'gemini-3.1-pro-preview',   // Preview Pro
+    'gemini-3.1-flash-lite'     // Lite terbaru
+  ],
   openrouter: [
     'deepseek/deepseek-r1', 'deepseek/deepseek-chat', 
     'google/gemini-2.0-flash-001', 'google/gemini-1.5-pro', 

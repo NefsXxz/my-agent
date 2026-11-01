@@ -286,8 +286,9 @@ function removeTyping() { const el = $('#typingIndicator'); if (el) el.remove();
 function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>'; }
 
 const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file dan menyimpan chat lama. 
-Gunakan tool 'search_internet' jika user bertanya tentang berita terkini, fakta terbaru, atau hal yang kamu tidak yakin. Jawab dengan gaya bahasa yang natural.`;
-
+Gunakan tool 'search_internet' jika user bertanya tentang berita terkini, fakta terbaru, atau hal yang kamu tidak yakin. 
+Jangan pernah membalas dengan kosong. Jika pencarian gagal, katakan dengan jujur bahwa kamu tidak bisa menemukan informasinya saat ini.
+Jawab dengan gaya bahasa yang natural dan profesional, kamu adalah seorang developer, dan suka ngereverse engineering sebuah game yang sudah mati.`;
 const TOOLS = [
   { type: 'function', function: { name: 'list_files', description: 'Tampilkan daftar file', parameters: { type: 'object', properties: {} } } },
   { type: 'function', function: { name: 'read_file', description: 'Baca isi file text.', parameters: { type: 'object', properties: { name: { type: 'string' }, offset: { type: 'integer' }, limit: { type: 'integer' } }, required: ['name'] } } },

@@ -48,13 +48,27 @@ export default async function handler(req) {
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
     const anthropicMsgs = messages.filter(m => m.role !== 'system').map(m => {
       if (m.role === 'tool') return { role: 'user', content: [{ type: 'tool_result', tool_use_id: m.tool_call_id, content: m.content }] };
+      
+      let finalContent = m.content;
+      if (Array.isArray(m.content)) {
+        finalContent = [];
+        m.content.forEach(c => {
+          if (c.type === 'text') finalContent.push({ type: 'text', text: c.text });
+          if (c.type === 'image_url') {
+             const match = c.image_url.url.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+             if (match) finalContent.push({ type: 'image', source: { type: 'base64', media_type: match[1], data: match[2] } });
+          }
+        });
+      }
+      
       if (m.role === 'assistant' && m.tool_calls) {
         const content = []; if (m.content) content.push({ type: 'text', text: m.content });
         m.tool_calls.forEach(tc => content.push({ type: 'tool_use', id: tc.id, name: tc.function.name, input: JSON.parse(tc.function.arguments) }));
         return { role: 'assistant', content };
       }
-      return { role: m.role, content: m.content };
+      return { role: m.role, content: finalContent };
     });
+    
     const anthropicTools = allTools.map(t => ({ name: t.function.name, description: t.function.description, input_schema: t.function.parameters }));
     upstream = await fetchWithRetry(`${baseUrl}/messages`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
@@ -83,7 +97,6 @@ export default async function handler(req) {
           if (m.content) parts.push({ text: m.content });
           m.tool_calls.forEach(tc => {
             const partObj = { functionCall: { name: tc.function.name, args: JSON.parse(tc.function.arguments || '{}') } };
-            // Simpan thought_signature untuk dikirim balik ke Gemini
             if (tc.thought_signature) partObj.thoughtSignature = tc.thought_signature;
             parts.push(partObj);
           });
@@ -95,7 +108,19 @@ export default async function handler(req) {
         const toolName = lastToolNames[m.tool_call_id] || 'search_internet';
         geminiMsgs.push({ role: 'user', parts: [{ functionResponse: { name: toolName, response: { content: m.content } } }] });
       } else {
-        geminiMsgs.push({ role: 'user', parts: [{ text: m.content || '' }] });
+        let parts = [];
+        if (Array.isArray(m.content)) {
+           m.content.forEach(c => {
+             if (c.type === 'text') parts.push({ text: c.text });
+             if (c.type === 'image_url') {
+                const match = c.image_url.url.match(/^data:(image\/[a-z]+);base64,(.+)$/);
+                if (match) parts.push({ inlineData: { mimeType: match[1], data: match[2] } });
+             }
+           });
+        } else {
+           parts.push({ text: m.content || '' });
+        }
+        geminiMsgs.push({ role: 'user', parts });
       }
     });
 
@@ -124,7 +149,6 @@ export default async function handler(req) {
         type: 'function',
         function: { name: part.functionCall.name, arguments: JSON.stringify(part.functionCall.args) }
       };
-      // Ambil thought_signature dari respons Gemini
       if (part.thoughtSignature) tcObj.thought_signature = part.thoughtSignature;
       tool_calls = [tcObj];
     }
@@ -135,6 +159,7 @@ export default async function handler(req) {
     });
 
   } else {
+    // OpenAI, DeepSeek, OpenRouter, Groq (Support native Vision via Array)
     upstream = await fetchWithRetry(`${baseUrl}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({ model, messages, tools: allTools })

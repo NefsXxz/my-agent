@@ -8,7 +8,8 @@ const BASE_URLS = {
   deepseek: 'https://api.deepseek.com/v1',
   gemini: 'https://generativelanguage.googleapis.com/v1beta',
   openrouter: 'https://openrouter.ai/api/v1',
-  groq: 'https://api.groq.com/openai/v1'
+  groq: 'https://api.groq.com/openai/v1',
+  howtofix: 'https://api.howtofix.id/v1' // <-- Tambahan HowToFix
 };
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
@@ -159,7 +160,7 @@ export default async function handler(req) {
     });
 
   } else {
-    // OpenAI, DeepSeek, OpenRouter, Groq (Support native Vision via Array)
+    // OpenAI, DeepSeek, OpenRouter, Groq, HowToFix
     upstream = await fetchWithRetry(`${baseUrl}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({ model, messages, tools: allTools })

@@ -83,5 +83,5 @@ if (respStatus === 401) respStatus = 400;
     if (lim) respHeaders.set('X-Agent-Quota-Limit', lim);
   }
 
-  return new Response(text, { status: upstream.status, headers: respHeaders });
+  return new Response(text, { status: respStatus, headers: respHeaders });
 }

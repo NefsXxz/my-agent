@@ -5,14 +5,26 @@ export const config = { runtime: 'edge' };
 const BASE_URLS = {
   openai: 'https://api.openai.com/v1',
   anthropic: 'https://api.anthropic.com/v1',
-  deepseek: 'https://api.deepseek.com/v1', // DeepSeek Direct
-  gemini: 'https://generativelanguage.googleapis.com/v1beta', // Gemini Direct
+  deepseek: 'https://api.deepseek.com/v1',
+  gemini: 'https://generativelanguage.googleapis.com/v1beta',
   openrouter: 'https://openrouter.ai/api/v1',
   groq: 'https://api.groq.com/openai/v1'
 };
 
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+
+// FUNGSI AUTO-RETRY UNTUK ERROR 503
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    const res = await fetch(url, options);
+    if (res.status === 503 && i < maxRetries - 1) {
+      await new Promise(r => setTimeout(r, 2000)); // Tunggu 2 detik
+    } else {
+      return res;
+    }
+  }
+}
 
 export default async function handler(req) {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
@@ -24,10 +36,10 @@ export default async function handler(req) {
 
   const keys = (await kv.hgetall('apikeys')) || {};
   const apiKey = keys[provider];
-  if (!apiKey) return json({ error: `API key ${provider} belum diset. Buka ⚙️ Keys.` }, 400);
+  if (!apiKey) return json({ error: `API key ${provider} belum diset.` }, 400);
 
   const memory = (await kv.get('memory')) || [];
-  const memBlock = memory.length ? '\n\n=== MEMORY ===\n' + memory.map(m => '- ' + m.text).join('\n') + '\n\nPanggil tool `remember` untuk simpan fakta baru.' : '';
+  const memBlock = memory.length ? '\n\n=== MEMORY ===\n' + memory.map(m => '- ' + m.text).join('\n') : '';
   const sysIdx = messages.findIndex(m => m.role === 'system');
   if (sysIdx >= 0) messages[sysIdx] = { ...messages[sysIdx], content: messages[sysIdx].content + memBlock };
   else messages.unshift({ role: 'system', content: 'Kamu adalah AI agent.' + memBlock });
@@ -37,7 +49,6 @@ export default async function handler(req) {
 
   let upstream, text, respHeaders = new Headers({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' });
 
-  // === ANTHROPIC (CLAUDE) ===
   if (provider === 'anthropic') {
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
     const anthropicMsgs = messages.filter(m => m.role !== 'system').map(m => {
@@ -51,7 +62,7 @@ export default async function handler(req) {
     });
     const anthropicTools = allTools.map(t => ({ name: t.function.name, description: t.function.description, input_schema: t.function.parameters }));
 
-    upstream = await fetch(`${baseUrl}/messages`, {
+    upstream = await fetchWithRetry(`${baseUrl}/messages`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({ model, max_tokens: 4096, system: sysMsg, messages: anthropicMsgs, tools: anthropicTools.length ? anthropicTools : undefined })
     });
@@ -66,35 +77,26 @@ export default async function handler(req) {
     });
     text = JSON.stringify({ choices: [{ message: { role: 'assistant', content, tool_calls } }], usage: { total_tokens: (data.usage?.input_tokens || 0) + (data.usage?.output_tokens || 0) } });
 
-  // === GOOGLE GEMINI ===
   } else if (provider === 'gemini') {
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
-    // Gemini butuh format role 'user' dan 'model'
     const geminiMsgs = messages.filter(m => m.role !== 'system' && m.role !== 'tool').map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content || '' }]
     }));
 
-    upstream = await fetch(`${baseUrl}/models/${model}:generateContent?key=${apiKey}`, {
+    upstream = await fetchWithRetry(`${baseUrl}/models/${model}:generateContent?key=${apiKey}`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        system_instruction: { parts: [{ text: sysMsg }] },
-        contents: geminiMsgs
-      })
+      body: JSON.stringify({ system_instruction: { parts: [{ text: sysMsg }] }, contents: geminiMsgs })
     });
 
     const rawText = await upstream.text();
     if (!upstream.ok) return new Response(rawText, { status: upstream.status, headers: respHeaders });
     const data = JSON.parse(rawText);
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    text = JSON.stringify({ 
-      choices: [{ message: { role: 'assistant', content: reply } }], 
-      usage: { total_tokens: (data.usageMetadata?.promptTokenCount || 0) + (data.usageMetadata?.candidatesTokenCount || 0) } 
-    });
+    text = JSON.stringify({ choices: [{ message: { role: 'assistant', content: reply } }], usage: { total_tokens: (data.usageMetadata?.promptTokenCount || 0) + (data.usageMetadata?.candidatesTokenCount || 0) } });
 
-  // === OPENAI, DEEPSEEK, OPENROUTER, GROQ ===
   } else {
-    upstream = await fetch(`${baseUrl}/chat/completions`, {
+    upstream = await fetchWithRetry(`${baseUrl}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({ model, messages, tools: allTools })
     });

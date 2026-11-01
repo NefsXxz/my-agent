@@ -45,7 +45,6 @@ export default async function handler(req) {
   let upstream, text, respHeaders = new Headers({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' });
 
   if (provider === 'anthropic') {
-    // ... (Sama seperti sebelumnya, tidak berubah)
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
     const anthropicMsgs = messages.filter(m => m.role !== 'system').map(m => {
       if (m.role === 'tool') return { role: 'user', content: [{ type: 'tool_result', tool_use_id: m.tool_call_id, content: m.content }] };
@@ -76,14 +75,18 @@ export default async function handler(req) {
     const geminiMsgs = [];
     let lastToolNames = {};
     
-    // Format pesan & tool untuk Gemini
     messages.filter(m => m.role !== 'system').forEach(m => {
       if (m.role === 'assistant') {
         if (m.tool_calls) {
           m.tool_calls.forEach(tc => { lastToolNames[tc.id] = tc.function.name; });
           const parts = [];
           if (m.content) parts.push({ text: m.content });
-          m.tool_calls.forEach(tc => parts.push({ functionCall: { name: tc.function.name, args: JSON.parse(tc.function.arguments || '{}') } }));
+          m.tool_calls.forEach(tc => {
+            const partObj = { functionCall: { name: tc.function.name, args: JSON.parse(tc.function.arguments || '{}') } };
+            // Simpan thought_signature untuk dikirim balik ke Gemini
+            if (tc.thought_signature) partObj.thoughtSignature = tc.thought_signature;
+            parts.push(partObj);
+          });
           geminiMsgs.push({ role: 'model', parts });
         } else {
           geminiMsgs.push({ role: 'model', parts: [{ text: m.content || '' }] });
@@ -116,11 +119,14 @@ export default async function handler(req) {
     let tool_calls = undefined;
     
     if (part?.functionCall) {
-      tool_calls = [{
+      const tcObj = {
         id: 'call_' + Date.now(),
         type: 'function',
         function: { name: part.functionCall.name, arguments: JSON.stringify(part.functionCall.args) }
-      }];
+      };
+      // Ambil thought_signature dari respons Gemini
+      if (part.thoughtSignature) tcObj.thought_signature = part.thoughtSignature;
+      tool_calls = [tcObj];
     }
     
     text = JSON.stringify({ 
@@ -129,7 +135,6 @@ export default async function handler(req) {
     });
 
   } else {
-    // OpenAI, DeepSeek, OpenRouter, Groq
     upstream = await fetchWithRetry(`${baseUrl}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({ model, messages, tools: allTools })

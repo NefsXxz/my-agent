@@ -11,18 +11,13 @@ const BASE_URLS = {
   groq: 'https://api.groq.com/openai/v1'
 };
 
-const json = (data, status = 200) =>
-  new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
 
-// FUNGSI AUTO-RETRY UNTUK ERROR 503
 async function fetchWithRetry(url, options, maxRetries = 3) {
   for (let i = 0; i < maxRetries; i++) {
     const res = await fetch(url, options);
-    if (res.status === 503 && i < maxRetries - 1) {
-      await new Promise(r => setTimeout(r, 2000)); // Tunggu 2 detik
-    } else {
-      return res;
-    }
+    if (res.status === 503 && i < maxRetries - 1) await new Promise(r => setTimeout(r, 2000));
+    else return res;
   }
 }
 
@@ -50,6 +45,7 @@ export default async function handler(req) {
   let upstream, text, respHeaders = new Headers({ 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' });
 
   if (provider === 'anthropic') {
+    // ... (Sama seperti sebelumnya, tidak berubah)
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
     const anthropicMsgs = messages.filter(m => m.role !== 'system').map(m => {
       if (m.role === 'tool') return { role: 'user', content: [{ type: 'tool_result', tool_use_id: m.tool_call_id, content: m.content }] };
@@ -61,12 +57,10 @@ export default async function handler(req) {
       return { role: m.role, content: m.content };
     });
     const anthropicTools = allTools.map(t => ({ name: t.function.name, description: t.function.description, input_schema: t.function.parameters }));
-
     upstream = await fetchWithRetry(`${baseUrl}/messages`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({ model, max_tokens: 4096, system: sysMsg, messages: anthropicMsgs, tools: anthropicTools.length ? anthropicTools : undefined })
     });
-
     const rawText = await upstream.text();
     if (!upstream.ok) return new Response(rawText, { status: upstream.status, headers: respHeaders });
     const data = JSON.parse(rawText);
@@ -79,23 +73,63 @@ export default async function handler(req) {
 
   } else if (provider === 'gemini') {
     const sysMsg = messages.find(m => m.role === 'system')?.content || '';
-    const geminiMsgs = messages.filter(m => m.role !== 'system' && m.role !== 'tool').map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content || '' }]
-    }));
+    const geminiMsgs = [];
+    let lastToolNames = {};
+    
+    // Format pesan & tool untuk Gemini
+    messages.filter(m => m.role !== 'system').forEach(m => {
+      if (m.role === 'assistant') {
+        if (m.tool_calls) {
+          m.tool_calls.forEach(tc => { lastToolNames[tc.id] = tc.function.name; });
+          const parts = [];
+          if (m.content) parts.push({ text: m.content });
+          m.tool_calls.forEach(tc => parts.push({ functionCall: { name: tc.function.name, args: JSON.parse(tc.function.arguments || '{}') } }));
+          geminiMsgs.push({ role: 'model', parts });
+        } else {
+          geminiMsgs.push({ role: 'model', parts: [{ text: m.content || '' }] });
+        }
+      } else if (m.role === 'tool') {
+        const toolName = lastToolNames[m.tool_call_id] || 'search_internet';
+        geminiMsgs.push({ role: 'user', parts: [{ functionResponse: { name: toolName, response: { content: m.content } } }] });
+      } else {
+        geminiMsgs.push({ role: 'user', parts: [{ text: m.content || '' }] });
+      }
+    });
+
+    const geminiTools = allTools.map(t => ({ name: t.function.name, description: t.function.description, parameters: t.function.parameters }));
 
     upstream = await fetchWithRetry(`${baseUrl}/models/${model}:generateContent?key=${apiKey}`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ system_instruction: { parts: [{ text: sysMsg }] }, contents: geminiMsgs })
+      body: JSON.stringify({ 
+        system_instruction: { parts: [{ text: sysMsg }] }, 
+        contents: geminiMsgs,
+        tools: geminiTools.length ? [{ function_declarations: geminiTools }] : undefined
+      })
     });
 
     const rawText = await upstream.text();
     if (!upstream.ok) return new Response(rawText, { status: upstream.status, headers: respHeaders });
     const data = JSON.parse(rawText);
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    text = JSON.stringify({ choices: [{ message: { role: 'assistant', content: reply } }], usage: { total_tokens: (data.usageMetadata?.promptTokenCount || 0) + (data.usageMetadata?.candidatesTokenCount || 0) } });
+    const part = data.candidates?.[0]?.content?.parts?.[0];
+    
+    let content = part?.text || '';
+    let tool_calls = undefined;
+    
+    if (part?.functionCall) {
+      tool_calls = [{
+        id: 'call_' + Date.now(),
+        type: 'function',
+        function: { name: part.functionCall.name, arguments: JSON.stringify(part.functionCall.args) }
+      }];
+    }
+    
+    text = JSON.stringify({ 
+      choices: [{ message: { role: 'assistant', content, tool_calls } }], 
+      usage: { total_tokens: (data.usageMetadata?.promptTokenCount || 0) + (data.usageMetadata?.candidatesTokenCount || 0) } 
+    });
 
   } else {
+    // OpenAI, DeepSeek, OpenRouter, Groq
     upstream = await fetchWithRetry(`${baseUrl}/chat/completions`, {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
       body: JSON.stringify({ model, messages, tools: allTools })

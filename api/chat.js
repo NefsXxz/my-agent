@@ -68,6 +68,9 @@ export default async function handler(req) {
 
   const text = await upstream.text();
 
+  let respStatus = upstream.status;
+if (respStatus === 401) respStatus = 400;
+
   // === FORWARD QUOTA HEADER GROQ KE FRONTEND ===
   const respHeaders = new Headers({
     'Content-Type': 'application/json',

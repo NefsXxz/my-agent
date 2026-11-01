@@ -5,192 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#05080f">
 <title>AI Agent Premium</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #05080f;
-  --bg-surface: #0d121f;
-  --bg-glass: rgba(13, 18, 31, 0.75);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(99, 102, 241, 0.5);
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --primary: #6366f1;
-  --primary-glow: rgba(99, 102, 241, 0.4);
-  --accent: #8b5cf6;
-  --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --gradient-hover: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
-  --danger: #ef4444;
-  --success: #10b981;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --radius-lg: 20px;
-  --shadow-glow: 0 0 20px var(--primary-glow);
-}
-
+:root { --bg: #05080f; --bg-surface: #0d121f; --bg-glass: rgba(13, 18, 31, 0.75); --border: rgba(255,255,255,0.08); --border-focus: rgba(99,102,241,0.5); --text: #f1f5f9; --text-muted: #94a3b8; --primary: #6366f1; --primary-glow: rgba(99,102,241,0.4); --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); --gradient-hover: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); --danger: #ef4444; --success: #10b981; --radius: 12px; --radius-sm: 8px; --radius-lg: 20px; --shadow-glow: 0 0 20px var(--primary-glow); }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; }
 body { background: var(--bg); color: var(--text); font-size: 14px; display: flex; flex-direction: column; }
-
-/* Background Effect */
-body::before {
-  content: ''; position: fixed; top: -20vh; left: -20vw; width: 60vw; height: 60vh;
-  background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 60%);
-  z-index: -1; pointer-events: none;
-}
-body::after {
-  content: ''; position: fixed; bottom: -20vh; right: -20vw; width: 60vw; height: 60vh;
-  background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 60%);
-  z-index: -1; pointer-events: none;
-}
-
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-
-/* Header Glassmorphism */
-header {
-  padding: 12px 20px;
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-  border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 10;
-}
-
-.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -0.5px; margin-right: 8px;}
-.brand-icon {
-  width: 32px; height: 32px; border-radius: 10px; background: var(--gradient);
-  display: flex; align-items: center; justify-content: center; font-size: 16px;
-  box-shadow: var(--shadow-glow);
-}
-
-/* Inputs & Selects */
+::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+header { padding: 12px 20px; background: var(--bg-glass); backdrop-filter: blur(16px); display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid var(--border); z-index: 10; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; margin-right: 8px; }
+.brand-icon { width: 32px; height: 32px; border-radius: 10px; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: var(--shadow-glow); }
 .select-wrapper { position: relative; display: flex; align-items: center; }
 .select-icon { position: absolute; left: 12px; font-size: 16px; pointer-events: none; }
-header select, header input, .btn-icon {
-  padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);
-  background: rgba(0,0,0,0.3); color: var(--text); font-size: 13px; font-family: inherit;
-  transition: all 0.2s; outline: none; appearance: none;
-}
+header select, header input, .btn-icon { padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: rgba(0,0,0,0.3); color: var(--text); font-size: 13px; font-family: inherit; outline: none; appearance: none; transition: 0.2s; }
 header select:focus, header input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--primary-glow); }
 header select.with-icon { padding-left: 36px; min-width: 180px; font-weight: 600; cursor: pointer; }
 header select:not(.with-icon) { cursor: pointer; }
 #model { flex: 1; min-width: 160px; font-weight: 500; }
-
-.btn-icon {
-  cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
-}
+.btn-icon { cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .btn-icon:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
 .btn-icon.danger:hover { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); color: #fca5a5; }
-.badge {
-  background: var(--primary-glow); color: #fff; border-radius: 20px; padding: 2px 8px;
-  font-size: 11px; font-weight: 700; min-width: 22px; text-align: center;
-}
-
-/* Token Bar */
-#tokenBar {
-  padding: 8px 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border);
-  display: flex; gap: 16px; align-items: center; font-size: 12px; flex-shrink: 0;
-}
+.badge { background: var(--primary-glow); color: #fff; border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+#tokenBar { padding: 8px 20px; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); display: flex; gap: 16px; align-items: center; font-size: 12px; flex-shrink: 0; }
 .stat { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-weight: 500; }
 .stat strong { color: var(--text); }
 #tokenTrack { flex: 1; height: 6px; background: rgba(0,0,0,0.5); border-radius: 10px; overflow: hidden; min-width: 100px; }
 #tokenFill { height: 100%; width: 0%; background: var(--gradient); transition: width 0.4s ease, background 0.3s ease; border-radius: 10px; }
 #quotaInfo { color: var(--success); font-weight: 600; background: rgba(16,185,129,0.1); padding: 4px 10px; border-radius: 6px; font-size: 11px; }
 #quotaInfo:empty { display: none; }
-
-/* Layout & Sidebar */
 .layout { flex: 1; display: flex; overflow: hidden; position: relative; }
-aside {
-  width: 280px; background: var(--bg-surface); border-right: 1px solid var(--border);
-  flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex; flex-direction: column; z-index: 5;
-}
+aside { width: 280px; background: var(--bg-surface); border-right: 1px solid var(--border); flex-shrink: 0; transition: transform 0.3s; display: flex; flex-direction: column; z-index: 5; }
 .sb-section { padding: 16px; border-bottom: 1px solid var(--border); }
 .sb-section:last-child { border-bottom: none; flex: 1; overflow-y: auto; }
-.sb-section h3 { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 1px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-
-.btn-new {
-  width: 100%; padding: 12px; background: var(--gradient); color: #fff; border: none;
-  border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; font-size: 14px;
-  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 4px 15px rgba(99,102,241,0.2);
-}
-.btn-new:hover { background: var(--gradient-hover); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,0.4); }
-
-/* Chat List */
-.chat-item {
-  padding: 12px 14px; background: transparent; border-radius: var(--radius-sm); margin-bottom: 4px;
-  font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 8px;
-  cursor: pointer; transition: all 0.2s; border: 1px solid transparent; color: var(--text-muted);
-}
+.sb-section h3 { font-size: 11px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; font-weight: 700; display: flex; justify-content: space-between; }
+.btn-new { width: 100%; padding: 12px; background: var(--gradient); color: #fff; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(99,102,241,0.2); }
+.btn-new:hover { background: var(--gradient-hover); transform: translateY(-1px); }
+.chat-item { padding: 12px 14px; background: transparent; border-radius: var(--radius-sm); margin-bottom: 4px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; border: 1px solid transparent; color: var(--text-muted); transition: 0.2s; }
 .chat-item:hover { background: rgba(255,255,255,0.03); color: var(--text); }
 .chat-item.active { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.2); color: var(--text); font-weight: 500; }
-.chat-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-.chat-item button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; opacity: 0; transition: all 0.2s; }
-.chat-item:hover button { opacity: 1; }
-.chat-item button:hover { color: var(--danger); }
-
-/* Files */
+.chat-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.chat-item button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 16px; opacity: 0; }
+.chat-item:hover button { opacity: 1; } .chat-item button:hover { color: var(--danger); }
 .file { padding: 10px 12px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 6px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
-.file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
-.file-meta { color: var(--text-muted); font-size: 10px; }
-.file button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; }
-.file button:hover { color: var(--danger); }
+.file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.file button { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 14px; } .file button:hover { color: var(--danger); }
 aside input[type=file] { font-size: 12px; width: 100%; color: var(--text-muted); margin-top: 8px; }
 aside input[type=file]::file-selector-button { background: rgba(255,255,255,0.05); color: var(--text); border: 1px solid var(--border); padding: 8px 12px; border-radius: var(--radius-sm); cursor: pointer; font-size: 12px; transition: 0.2s; }
-aside input[type=file]::file-selector-button:hover { background: rgba(255,255,255,0.1); }
-
-/* Main Chat Area */
 main { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; scroll-behavior: smooth; }
-
 .msg { max-width: 85%; padding: 16px 20px; border-radius: var(--radius-lg); line-height: 1.6; font-size: 15px; position: relative; animation: slideUp 0.3s ease; word-wrap: break-word; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .msg.user { align-self: flex-end; background: var(--gradient); color: #fff; border-bottom-right-radius: 4px; box-shadow: 0 4px 15px rgba(99,102,241,0.2); }
 .msg.assistant { align-self: flex-start; background: var(--bg-surface); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
 .msg.assistant::before { content: '✨'; position: absolute; left: -40px; top: 12px; width: 28px; height: 28px; border-radius: 8px; background: var(--bg-surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; }
 .msg.tool { align-self: flex-start; background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.2); font-size: 12px; font-family: monospace; color: #6ee7b7; padding: 10px 14px; border-radius: var(--radius-sm); margin-left: 40px; }
 .msg.error { align-self: center; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; font-size: 13px; padding: 12px 16px; border-radius: var(--radius-sm); text-align: center; }
 .msg.memory { align-self: center; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); font-size: 13px; color: #d8b4fe; padding: 8px 16px; border-radius: 20px; }
-
-/* Typing */
 .typing { align-self: flex-start; background: var(--bg-surface); border: 1px solid var(--border); padding: 18px 22px; border-radius: var(--radius-lg); border-bottom-left-radius: 4px; display: flex; gap: 6px; align-items: center; position: relative; }
 .typing::before { content: '✨'; position: absolute; left: -40px; top: 14px; width: 28px; height: 28px; border-radius: 8px; background: var(--bg-surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 14px; }
 .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); animation: bounce 1.4s infinite ease-in-out; }
 .typing span:nth-child(2) { animation-delay: 0.2s; } .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-6px); opacity: 1; } }
-
 #chatPlaceholder { color: var(--text-muted); text-align: center; margin: auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
 #chatPlaceholder .ph-icon { font-size: 50px; filter: drop-shadow(0 0 15px rgba(99,102,241,0.5)); }
 #chatPlaceholder .ph-title { font-size: 20px; font-weight: 700; color: var(--text); }
 #chatPlaceholder .ph-sub { font-size: 14px; color: var(--text-muted); }
-
-/* Footer */
-footer {
-  padding: 20px; background: var(--bg-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-end; flex-shrink: 0;
-}
-footer textarea {
-  flex: 1; padding: 14px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border);
-  background: rgba(0,0,0,0.3); color: var(--text); resize: none; min-height: 52px; max-height: 200px;
-  font-family: inherit; font-size: 15px; line-height: 1.5; transition: all 0.2s; outline: none;
-}
+footer { padding: 20px; background: var(--bg-glass); backdrop-filter: blur(16px); border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-end; flex-shrink: 0; }
+footer textarea { flex: 1; padding: 14px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: rgba(0,0,0,0.3); color: var(--text); resize: none; min-height: 52px; max-height: 200px; font-family: inherit; font-size: 15px; line-height: 1.5; transition: 0.2s; outline: none; }
 footer textarea:focus { border-color: var(--border-focus); background: rgba(0,0,0,0.5); box-shadow: 0 0 0 3px var(--primary-glow); }
-footer button {
-  height: 52px; padding: 0 24px; border-radius: var(--radius-lg); background: var(--gradient); color: #fff;
-  border: none; cursor: pointer; font-weight: 600; font-size: 15px; transition: all 0.2s;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(99,102,241,0.3);
-}
+footer button { height: 52px; padding: 0 24px; border-radius: var(--radius-lg); background: var(--gradient); color: #fff; border: none; cursor: pointer; font-weight: 600; font-size: 15px; transition: 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(99,102,241,0.3); }
 footer button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.5); }
 footer button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* Overlays / Modals */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
 .overlay.active { display: flex; }
 .modal { background: var(--bg-surface); border: 1px solid var(--border); padding: 28px; border-radius: var(--radius-lg); width: 100%; max-width: 480px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); animation: scaleIn 0.2s ease; }
@@ -202,14 +88,10 @@ footer button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 .modal button:hover { background: var(--gradient-hover); }
 .modal button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
 .modal button.secondary:hover { background: rgba(255,255,255,0.05); }
-
 .key-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; }
 .key-item code { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--success); }
 .empty-state { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px; }
-
 #sidebarToggle { display: none; }
-
-/* Mobile */
 @media (max-width: 768px) {
   #sidebarToggle { display: flex; } .brand span.brand-text { display: none; }
   aside { position: absolute; left: 0; top: 0; bottom: 0; transform: translateX(-100%); width: 290px; box-shadow: 10px 0 30px rgba(0,0,0,0.5); }
@@ -229,7 +111,6 @@ footer button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
   <button id="sidebarToggle" class="btn-icon" onclick="toggleSidebar()">☰</button>
   <div class="brand"><div class="brand-icon">✨</div><span class="brand-text">AI Premium</span></div>
   
-  <!-- Provider Selector -->
   <div class="select-wrapper">
     <span class="select-icon" id="provider-icon">🤖</span>
     <select id="provider" class="with-icon" onchange="handleProviderChange()">
@@ -242,7 +123,6 @@ footer button:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
     </select>
   </div>
   
-  <!-- Model Selector (Diubah jadi <select> murni biar drop-down-nya jalan) -->
   <select id="model" onchange="handleModelChange()"></select>
   
   <button class="btn-icon" onclick="openMemory()">🧠 <span class="badge" id="memCount">0</span></button>
@@ -299,48 +179,24 @@ const fmtSize = b => b < 1024 ? b + ' B' : b < 1048576 ? (b/1024).toFixed(1) + '
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const formatTokens = n => n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'k' : String(n);
 
-// --- KONFIGURASI MODEL & IKON ---
-const PROVIDER_ICONS = {
-  openai: '🤖', anthropic: '🧠', deepseek: '🐳', gemini: '✨', openrouter: '🔀', groq: '⚡'
-};
-
-const MODEL_LIMITS = {
-  'gpt-4o': 128000, 'gpt-4o-mini': 128000, 'o1-preview': 128000, 'o1-mini': 128000,
-  'claude-3-5-sonnet-20241022': 200000, 'claude-3-5-haiku-20241022': 200000, 'claude-3-opus-20240229': 200000,
-  'deepseek-chat': 64000, 'deepseek-reasoner': 64000,
-  'gemini-4-argon': 1048576, 'gemini-3.8-flash': 1048576, 'gemini-3.7-flash': 1048576, 'gemini-3.6-flash': 1048576, 'gemini-3.5-flash-lite': 1048576,
-  'llama-3.3-70b-versatile': 128000, 'llama-3.1-8b-instant': 128000, 'mixtral-8x7b-32768': 32768
-};
-
-const PROVIDER_MODELS = {
-  openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'],
-  anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'],
-  deepseek: ['deepseek-chat', 'deepseek-reasoner'],
-  gemini: ['gemini-3.6-flash', 'gemini-4-argon', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'],
-  openrouter: ['deepseek/deepseek-r1', 'google/gemini-1.5-pro', 'anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'meta-llama/llama-3.3-70b-instruct'],
-  groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768']
-};
+const PROVIDER_ICONS = { openai: '🤖', anthropic: '🧠', deepseek: '🐳', gemini: '✨', openrouter: '🔀', groq: '⚡' };
+const MODEL_LIMITS = { 'gpt-4o': 128000, 'gpt-4o-mini': 128000, 'o1-preview': 128000, 'o1-mini': 128000, 'claude-3-5-sonnet-20241022': 200000, 'claude-3-5-haiku-20241022': 200000, 'claude-3-opus-20240229': 200000, 'deepseek-chat': 64000, 'deepseek-reasoner': 64000, 'gemini-4-argon': 1048576, 'gemini-3.8-flash': 1048576, 'gemini-3.7-flash': 1048576, 'gemini-3.6-flash': 1048576, 'gemini-3.5-flash-lite': 1048576, 'llama-3.3-70b-versatile': 128000, 'llama-3.1-8b-instant': 128000, 'mixtral-8x7b-32768': 32768 };
+const PROVIDER_MODELS = { openai: ['gpt-4o', 'gpt-4o-mini', 'o1-preview', 'o1-mini'], anthropic: ['claude-3-5-sonnet-20241022', 'claude-3-5-haiku-20241022', 'claude-3-opus-20240229'], deepseek: ['deepseek-chat', 'deepseek-reasoner'], gemini: ['gemini-3.6-flash', 'gemini-4-argon', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite'], openrouter: ['deepseek/deepseek-r1', 'google/gemini-1.5-pro', 'anthropic/claude-3.5-sonnet', 'openai/gpt-4o', 'meta-llama/llama-3.3-70b-instruct'], groq: ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', 'mixtral-8x7b-32768'] };
 
 let db, files = [];
 const DB_NAME = 'ai_agent', STORE = 'files';
 const MAX_FILES = 20, MAX_TOTAL = 500 * 1024 * 1024;
 let chats = [], currentChatId = null, messages = [], busy = false;
-let sessionUsage = { total: 0 }, lastContextTokens = 0;
-let quotaRemaining = null, quotaLimit = null;
+let sessionUsage = { total: 0 }, lastContextTokens = 0, quotaRemaining = null, quotaLimit = null;
 
 function resetUsage() { sessionUsage = { total: 0 }; lastContextTokens = 0; updateTokenBar(); }
-
 function updateTokenBar() {
-  const model = $('#model').value;
-  const limit = MODEL_LIMITS[model] || 128000;
+  const model = $('#model').value; const limit = MODEL_LIMITS[model] || 128000;
   const used = lastContextTokens > 0 ? lastContextTokens : sessionUsage.total;
   const pct = Math.min(100, (used / limit) * 100);
-  const fill = $('#tokenFill');
-  fill.style.width = pct + '%';
+  const fill = $('#tokenFill'); fill.style.width = pct + '%';
   fill.style.background = pct > 80 ? 'linear-gradient(135deg,#ef4444,#f97316)' : pct > 50 ? 'linear-gradient(135deg,#f59e0b,#fbbf24)' : 'var(--gradient)';
-  $('#tokenCount').textContent = formatTokens(used);
-  $('#tokenLimit').textContent = formatTokens(limit);
-  
+  $('#tokenCount').textContent = formatTokens(used); $('#tokenLimit').textContent = formatTokens(limit);
   const provider = $('#provider').value;
   if (provider === 'openrouter' && quotaRemaining !== null) $('#quotaInfo').textContent = `💰 $${Number(quotaRemaining).toFixed(2)} sisa`;
   else if (provider === 'groq' && quotaRemaining !== null) $('#quotaInfo').textContent = `⚡ ${formatTokens(quotaRemaining)} sisa`;
@@ -358,17 +214,9 @@ const isTextFile = f => f.type.startsWith('text/') || /\.(md|txt|json|js|ts|jsx|
 async function refreshFiles() {
   const keys = await dbKeys(); files = [];
   for (const k of keys) { const m = await dbGet(k); if (m) files.push({ id: k, name: m.name, size: m.size, type: m.type, isText: m.isText }); }
-  $('#fileCount').textContent = files.length;
-  const list = $('#fileList'); list.innerHTML = '';
+  $('#fileCount').textContent = files.length; const list = $('#fileList'); list.innerHTML = '';
   if (!files.length) { list.innerHTML = '<div class="empty-state">Belum ada file.</div>'; return; }
-  files.forEach(f => {
-    const div = document.createElement('div'); div.className = 'file';
-    const span = document.createElement('span'); span.title = f.name;
-    span.innerHTML = `${f.name.length > 18 ? f.name.slice(0,18)+'…' : f.name} <span class="file-meta">· ${fmtSize(f.size)}</span>`;
-    const btn = document.createElement('button'); btn.textContent = '✕';
-    btn.onclick = async () => { await dbDel(f.id); await refreshFiles(); };
-    div.appendChild(span); div.appendChild(btn); list.appendChild(div);
-  });
+  files.forEach(f => { const div = document.createElement('div'); div.className = 'file'; const span = document.createElement('span'); span.title = f.name; span.innerHTML = `${f.name.length > 18 ? f.name.slice(0,18)+'…' : f.name} <span class="file-meta">· ${fmtSize(f.size)}</span>`; const btn = document.createElement('button'); btn.textContent = '✕'; btn.onclick = async () => { await dbDel(f.id); await refreshFiles(); }; div.appendChild(span); div.appendChild(btn); list.appendChild(div); });
 }
 
 $('#fileInput').onchange = async e => {
@@ -384,33 +232,17 @@ $('#fileInput').onchange = async e => {
   e.target.value = ''; await refreshFiles();
 };
 
-// Fungsi Dropdown Model & Provider
 function updateModelDropdown() {
-  const p = $('#provider').value;
-  const sel = $('#model');
+  const p = $('#provider').value; const sel = $('#model');
   sel.innerHTML = (PROVIDER_MODELS[p] || []).map(m => `<option value="${m}">${m}</option>`).join('');
   const saved = localStorage.getItem('agent_model_' + p);
-  if (saved && Array.from(sel.options).some(o => o.value === saved)) {
-    sel.value = saved;
-  } else {
-    sel.value = PROVIDER_MODELS[p]?.[0] || '';
-  }
-  $('#provider-icon').textContent = PROVIDER_ICONS[p] || '🤖';
-  updateTokenBar();
+  if (saved && Array.from(sel.options).some(o => o.value === saved)) sel.value = saved;
+  else sel.value = PROVIDER_MODELS[p]?.[0] || '';
+  $('#provider-icon').textContent = PROVIDER_ICONS[p] || '🤖'; updateTokenBar();
 }
-
-function handleProviderChange() {
-  localStorage.setItem('agent_provider', $('#provider').value);
-  updateModelDropdown();
-  quotaRemaining = null; quotaLimit = null; fetchQuota();
-}
-function handleModelChange() {
-  localStorage.setItem('agent_model_' + $('#provider').value, $('#model').value);
-  updateTokenBar();
-}
-
-$('#provider').value = localStorage.getItem('agent_provider') || 'openai';
-updateModelDropdown();
+function handleProviderChange() { localStorage.setItem('agent_provider', $('#provider').value); updateModelDropdown(); quotaRemaining = null; quotaLimit = null; fetchQuota(); }
+function handleModelChange() { localStorage.setItem('agent_model_' + $('#provider').value, $('#model').value); updateTokenBar(); }
+$('#provider').value = localStorage.getItem('agent_provider') || 'openai'; updateModelDropdown();
 
 function toggleSidebar() { $('#sidebar').classList.toggle('open'); }
 document.addEventListener('click', e => { if (window.innerWidth > 768) return; const sb = $('#sidebar'); if (!sb.classList.contains('open')) return; if (sb.contains(e.target) || e.target.closest('#sidebarToggle')) return; sb.classList.remove('open'); });
@@ -453,13 +285,17 @@ function showTyping() { removeTyping(); const div = document.createElement('div'
 function removeTyping() { const el = $('#typingIndicator'); if (el) el.remove(); }
 function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>'; }
 
-const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file dan menyimpan chat lama. Gunakan tool bila perlu. Jawab dengan gaya bahasa yang natural dan profesional.`;
+const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file dan menyimpan chat lama. 
+Gunakan tool 'search_internet' jika user bertanya tentang berita terkini, fakta terbaru, atau hal yang kamu tidak yakin. Jawab dengan gaya bahasa yang natural.`;
+
 const TOOLS = [
   { type: 'function', function: { name: 'list_files', description: 'Tampilkan daftar file', parameters: { type: 'object', properties: {} } } },
   { type: 'function', function: { name: 'read_file', description: 'Baca isi file text.', parameters: { type: 'object', properties: { name: { type: 'string' }, offset: { type: 'integer' }, limit: { type: 'integer' } }, required: ['name'] } } },
   { type: 'function', function: { name: 'search_files', description: 'Cari kata kunci di file', parameters: { type: 'object', properties: { query: { type: 'string' } }, required: ['query'] } } },
   { type: 'function', function: { name: 'list_recent_chats', description: 'Daftar chat sebelumnya', parameters: { type: 'object', properties: { limit: { type: 'integer' } } } } },
-  { type: 'function', function: { name: 'read_chat', description: 'Baca isi chat lama', parameters: { type: 'object', properties: { id: { type: 'string' }, limit: { type: 'integer' } }, required: ['id'] } } }
+  { type: 'function', function: { name: 'read_chat', description: 'Baca isi chat lama', parameters: { type: 'object', properties: { id: { type: 'string' }, limit: { type: 'integer' } }, required: ['id'] } } },
+  // TAMBAHAN TOOL SEARCH INTERNET
+  { type: 'function', function: { name: 'search_internet', description: 'Cari informasi terbaru di internet menggunakan mesin pencari. Gunakan ini jika kamu butuh berita terkini, fakta terbaru, atau informasi yang tidak ada di pengetahuanmu.', parameters: { type: 'object', properties: { query: { type: 'string', description: 'Kata kunci pencarian' } }, required: ['query'] } } }
 ];
 
 async function callTool(name, a) {
@@ -469,6 +305,19 @@ async function callTool(name, a) {
   if (name === 'list_recent_chats') { const r = await fetch('/api/chats'); const list = await r.json(); const lim = a.limit || 5; return list.slice(0, lim).map(c => `[${c.id}] ${c.title} (${new Date(c.updatedAt).toLocaleDateString('id-ID')})`).join('\n') || 'Belum ada chat.'; }
   if (name === 'read_chat') { const r = await fetch(`/api/chats?id=${a.id}`); if (!r.ok) return 'Chat tidak ditemukan.'; const chat = await r.json(); const msgs = (chat.messages || []).filter(m => m.role === 'user' || m.role === 'assistant').slice(-(a.limit || 20)); return `=== ${chat.title} ===\n\n` + msgs.map(m => `${m.role.toUpperCase()}: ${String(m.content || '').slice(0, 500)}`).join('\n\n'); }
   if (name === 'remember') { if (!a.text || !a.text.trim()) return 'Gagal.'; const r = await fetch('/api/memory', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: a.text }) }); if (r.ok) { await loadMemory(); addMsgEl('memory', `🧠 Diingat: ${a.text}`); return `✓ Tersimpan.`; } return 'Gagal.'; }
+  
+  // HANDLER SEARCH INTERNET
+  if (name === 'search_internet') {
+    const r = await fetch('/api/search', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: a.query })
+    });
+    if (!r.ok) return 'Gagal mencari di internet.';
+    const data = await r.json();
+    if (data.error) return `Error pencarian: ${data.error}`;
+    return data.results.map(x => `- ${x.title}\n${x.content}\nSumber: ${x.url}`).join('\n\n');
+  }
+  
   return 'Tool tidak dikenal.';
 }
 

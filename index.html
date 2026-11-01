@@ -69,8 +69,6 @@ main { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: 
 #chatPlaceholder .ph-icon { font-size: 50px; filter: drop-shadow(0 0 15px rgba(99,102,241,0.5)); }
 #chatPlaceholder .ph-title { font-size: 20px; font-weight: 700; color: var(--text); }
 #chatPlaceholder .ph-sub { font-size: 14px; color: var(--text-muted); }
-
-/* UPDATE CSS UNTUK FOOTER & INPUT GAMBAR */
 footer { padding: 20px; background: var(--bg-glass); backdrop-filter: blur(16px); border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
 .input-row { display: flex; gap: 12px; align-items: flex-end; width: 100%; }
 footer textarea { flex: 1; padding: 14px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: rgba(0,0,0,0.3); color: var(--text); resize: none; min-height: 52px; max-height: 200px; font-family: inherit; font-size: 15px; line-height: 1.5; transition: 0.2s; outline: none; }
@@ -80,12 +78,12 @@ footer .btn-attach:hover { background: rgba(255,255,255,0.1); border-color: var(
 footer button#send { height: 52px; padding: 0 24px; border-radius: var(--radius-lg); background: var(--gradient); color: #fff; border: none; cursor: pointer; font-weight: 600; font-size: 15px; transition: 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(99,102,241,0.3); flex-shrink: 0; }
 footer button#send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.5); }
 footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
-
 .image-preview-container { display: none; padding: 10px; background: rgba(0,0,0,0.2); border-radius: var(--radius-sm); border: 1px solid var(--border); position: relative; width: fit-content; }
 .image-preview-container img { height: 60px; border-radius: 6px; display: block; }
 .image-preview-container button { position: absolute; top: -8px; right: -8px; background: var(--danger); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-.msg-image { max-width: 100%; border-radius: 8px; margin-top: 8px; display: block; }
-
+.msg-image { max-width: 100%; border-radius: 8px; margin-top: 8px; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.msg-link { color: #818cf8; text-decoration: underline; }
+.msg-link:hover { color: #a5b4fc; }
 .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
@@ -103,11 +101,37 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 .key-item code { background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px; font-size: 12px; color: var(--success); }
 .empty-state { color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px; }
 #sidebarToggle { display: none; }
-.sources-container { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
-.sources-title { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-.sources-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.source-pill { display: inline-flex; align-items: center; background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 6px 12px; border-radius: 16px; font-size: 12px; color: var(--text); text-decoration: none; transition: 0.2s; }
-.source-pill:hover { background: rgba(99,102,241,0.15); border-color: var(--primary); color: var(--primary-hover); transform: translateY(-1px); }
+
+/* CSS BARU UNTUK EFEK PERPLEXITY-STYLE */
+.sources-container { margin-top: 16px; }
+.source-pill-new {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  padding: 6px 14px 6px 6px; border-radius: 999px;
+  cursor: pointer; transition: 0.2s; font-size: 13px; font-weight: 500;
+  color: var(--text);
+}
+.source-pill-new:hover { background: rgba(255,255,255,0.08); border-color: var(--border-strong); }
+.favicon-stack { display: flex; align-items: center; }
+.favicon-stack img {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid var(--bg-surface); background: #fff; object-fit: contain;
+}
+.favicon-stack img:not(:first-child) { margin-left: -8px; }
+.source-pill-new span { margin-left: 4px; }
+.source-pill-new:hover span { color: var(--primary-hover); }
+
+/* Modal List Sumber */
+.source-list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); margin-bottom: 8px; text-decoration: none; color: var(--text); transition: 0.2s;
+}
+.source-list-item:hover { background: rgba(255,255,255,0.05); border-color: var(--primary-glow); }
+.source-list-item img { width: 20px; height: 20px; border-radius: 4px; background: #fff; }
+.source-list-item div { display: flex; flex-direction: column; overflow: hidden; }
+.source-list-item .src-title { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.source-list-item .src-domain { font-size: 11px; color: var(--text-muted); }
 
 @media (max-width: 768px) {
   #sidebarToggle { display: flex; } .brand span.brand-text { display: none; }
@@ -178,6 +202,15 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   </div>
 </footer>
 
+<!-- Modal List Sumber (Perplexity Style) -->
+<div id="sourcesOverlay" class="overlay">
+  <div class="modal">
+    <h3>🌐 Sumber Referensi</h3>
+    <div id="sourcesModalList" style="max-height:60vh;overflow-y:auto;padding-right:4px;margin-bottom:16px;"></div>
+    <button class="secondary" onclick="document.getElementById('sourcesOverlay').classList.remove('active')">Tutup</button>
+  </div>
+</div>
+
 <div id="loginOverlay" class="overlay active">
   <div class="modal"><h3>🔒 Akses Terbatas</h3><input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"><button onclick="doLogin()">Masuk</button><div id="loginError" class="error" style="color:var(--danger);text-align:center;margin-top:10px;font-size:13px;"></div></div>
 </div>
@@ -214,7 +247,7 @@ const MAX_FILES = 20, MAX_TOTAL = 500 * 1024 * 1024;
 let chats = [], currentChatId = null, messages = [], busy = false;
 let sessionUsage = { total: 0 }, lastContextTokens = 0, quotaRemaining = null, quotaLimit = null;
 let activeSearchSources = [];
-let attachedImageBase64 = null; // Untuk nyimpen gambar yang dilampirkan
+let attachedImageBase64 = null;
 
 function resetUsage() { sessionUsage = { total: 0 }; lastContextTokens = 0; updateTokenBar(); }
 function updateTokenBar() {
@@ -246,7 +279,6 @@ async function refreshFiles() {
   files.forEach(f => { const div = document.createElement('div'); div.className = 'file'; const span = document.createElement('span'); span.title = f.name; span.innerHTML = `${f.name.length > 18 ? f.name.slice(0,18)+'…' : f.name} <span class="file-meta">· ${fmtSize(f.size)}</span>`; const btn = document.createElement('button'); btn.textContent = '✕'; btn.onclick = async () => { await dbDel(f.id); await refreshFiles(); }; div.appendChild(span); div.appendChild(btn); list.appendChild(div); });
 }
 
-// Upload File ke IndexedDB
 $('#fileInput').onchange = async e => {
   const selected = Array.from(e.target.files); let total = files.reduce((s, f) => s + f.size, 0);
   for (const file of selected) {
@@ -260,7 +292,6 @@ $('#fileInput').onchange = async e => {
   e.target.value = ''; await refreshFiles();
 };
 
-// Handler Lampirkan Gambar di Footer
 function handleImageSelect(e) {
   const file = e.target.files[0]; if (!file) return;
   if (file.size > 4 * 1024 * 1024) return alert('Gambar maksimal 4MB untuk AI Vision.');
@@ -271,14 +302,13 @@ function handleImageSelect(e) {
     $('#imagePreviewContainer').style.display = 'block';
   };
   reader.readAsDataURL(file);
-  e.target.value = ''; // Reset
+  e.target.value = '';
 }
 function removeAttachedImage() {
   attachedImageBase64 = null;
   $('#imagePreviewContainer').style.display = 'none';
   $('#imagePreviewImg').src = '';
 }
-// Support Paste Gambar (Ctrl+V)
 $('#input').addEventListener('paste', (e) => {
   const items = e.clipboardData.items;
   for (let i = 0; i < items.length; i++) {
@@ -339,6 +369,43 @@ async function switchChat(id) { currentChatId = id; const r = await fetch(`/api/
 async function deleteChat(id) { if (!confirm('Hapus chat ini?')) return; await fetch(`/api/chats?id=${id}`, { method: 'DELETE' }); if (currentChatId === id) { currentChatId = null; messages = []; resetUsage(); renderMessages(); } await loadChats(); if (chats.length > 0) await switchChat(chats[0].id); else await newChat(); }
 async function saveCurrentChat() { if (!currentChatId) return; let title; const cur = chats.find(c => c.id === currentChatId); if (cur && (cur.title === 'Chat Baru' || !cur.title)) { const first = messages.find(m => m.role === 'user'); if (first) { let textContent = first.content; if (Array.isArray(textContent)) textContent = textContent.find(c => c.type === 'text')?.text || 'Gambar'; title = textContent.slice(0, 60) + (textContent.length > 60 ? '…' : ''); } } const body = { messages }; if (title) body.title = title; await fetch(`/api/chats?id=${currentChatId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); await loadChats(); }
 
+function formatMarkdown(text) {
+  if (!text) return '';
+  let html = escapeHtml(text);
+  html = html.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, url) => `<img src="${url}" alt="${alt}" class="msg-image" onerror="this.style.display='none'">`);
+  html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
+    const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)/i) || url.includes('images.unsplash.com') || url.includes('cdn.');
+    if (isImage) return `<img src="${url}" alt="${text}" class="msg-image" title="${text}" onerror="this.style.display='none'">`;
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="msg-link">${text}</a>`;
+  });
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+// FUNGSI BUKA MODAL SUMBER
+function openSourcesModal(sources) {
+  const list = $('#sourcesModalList');
+  list.innerHTML = sources.map(s => {
+    try {
+      const domain = new URL(s.url).hostname.replace('www.', '');
+      const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      const title = s.title || domain;
+      return `
+        <a href="${s.url}" target="_blank" class="source-list-item">
+          <img src="${favicon}" onerror="this.src='https://www.google.com/s2/favicons?domain=google.com&sz=64'">
+          <div>
+            <div class="src-title">${escapeHtml(title)}</div>
+            <div class="src-domain">${domain}</div>
+          </div>
+        </a>
+      `;
+    } catch(e) { return ''; }
+  }).join('');
+  $('#sourcesOverlay').classList.add('active');
+}
+
 function renderMessages() {
   const chatEl = $('#chat'); chatEl.innerHTML = '';
   if (messages.length === 0) { chatEl.innerHTML = `<div id="chatPlaceholder"><span class="ph-icon">🚀</span><div class="ph-title">Chat Baru</div><div class="ph-sub">Mulai ketik pesan di bawah.</div></div>`; return; }
@@ -375,7 +442,8 @@ function addMsgEl(role, content, imgSrc = null, sources = []) {
   const div = document.createElement('div'); div.className = 'msg ' + role;
   
   const textNode = document.createElement('div');
-  textNode.textContent = content;
+  if (role === 'assistant') textNode.innerHTML = formatMarkdown(content);
+  else textNode.textContent = content;
   div.appendChild(textNode);
 
   if (imgSrc) {
@@ -384,7 +452,7 @@ function addMsgEl(role, content, imgSrc = null, sources = []) {
     div.appendChild(imgEl);
   }
 
-  // Render Link Sumber
+  // RENDER PILL PERPLEXITY-STYLE
   if (role === 'assistant' && sources && sources.length > 0) {
     const uniqueSources = [];
     const seen = new Set();
@@ -395,20 +463,32 @@ function addMsgEl(role, content, imgSrc = null, sources = []) {
     if (uniqueSources.length > 0) {
       const sourceDiv = document.createElement('div');
       sourceDiv.className = 'sources-container';
-      sourceDiv.innerHTML = `<div class="sources-title">🌐 Sumber Referensi</div>`;
       
-      const list = document.createElement('div');
-      list.className = 'sources-list';
-      uniqueSources.forEach((s, idx) => {
-        const a = document.createElement('a');
-        a.href = s.url; a.target = '_blank'; a.className = 'source-pill';
+      // Buat tumpukan favicon (maksimal 4)
+      let stackHtml = '<div class="favicon-stack">';
+      const domainsToShow = uniqueSources.slice(0, 4);
+      domainsToShow.forEach(s => {
         try {
           const domain = new URL(s.url).hostname.replace('www.', '');
-          a.textContent = `[${idx + 1}] ${domain}`;
-        } catch (e) { a.textContent = `[${idx + 1}] Link`; }
-        list.appendChild(a);
+          const fav = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+          stackHtml += `<img src="${fav}" onerror="this.style.display='none'">`;
+        } catch(e) {}
       });
-      sourceDiv.appendChild(list);
+      stackHtml += '</div>';
+
+      const pill = document.createElement('div');
+      pill.className = 'source-pill-new';
+      pill.innerHTML = `${stackHtml}<span>${uniqueSources.length} web pages</span>`;
+      
+      // Simpan data sumber di elemen biar bisa di-pass ke modal
+      const srcData = JSON.stringify(uniqueSources);
+      pill.onclick = () => {
+        // Karena JSON.stringify kadang error buat HTML attribute, kita simpen di closure/variabel global aja
+        window._currentSources = uniqueSources;
+        openSourcesModal(uniqueSources);
+      };
+
+      sourceDiv.appendChild(pill);
       div.appendChild(sourceDiv);
     }
   }
@@ -421,7 +501,8 @@ function removeTyping() { const el = $('#typingIndicator'); if (el) el.remove();
 function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if (isBusy) btn.innerHTML = '<span class="spinner"></span>'; else btn.innerHTML = '<span id="sendLabel">Kirim</span>'; }
 
 const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file, gambar, dan menyimpan chat lama. 
-Gunakan tool 'search_internet' jika butuh info terbaru. Jawab dengan gaya bahasa yang natural.`;
+Gunakan tool 'search_internet' jika butuh info terbaru. 
+PENTING: Jika kamu ingin menampilkan gambar ke user, WAJIB gunakan format Markdown Gambar: ![deskripsi](url_gambar). Jangan cuma kasih link biasa.`;
 
 const TOOLS = [
   { type: 'function', function: { name: 'list_files', description: 'Tampilkan daftar file', parameters: { type: 'object', properties: {} } } },
@@ -448,7 +529,7 @@ async function callTool(name, a) {
     
     if (data.results) {
       data.results.forEach(res => {
-        if (res.url) activeSearchSources.push({ url: res.url });
+        if (res.url) activeSearchSources.push({ url: res.url, title: res.title });
       });
     }
     
@@ -461,14 +542,13 @@ async function callTool(name, a) {
 async function send() {
   if (busy) return; 
   const text = $('#input').value.trim(); 
-  if (!text && !attachedImageBase64) return; // Bisa kirim kalo ada teks ATAU gambar
+  if (!text && !attachedImageBase64) return; 
   if (!currentChatId) await newChat();
   
   const provider = $('#provider').value; const model = $('#model').value; if (!model) return alert('Pilih model');
   
   busy = true; setSendBusy(true); $('#input').value = ''; $('#input').style.height = 'auto'; 
   
-  // Siapkan payload multimodal
   let userContent = text;
   if (attachedImageBase64) {
     userContent = [];
@@ -479,7 +559,7 @@ async function send() {
   addMsgEl('user', text, attachedImageBase64); 
   messages.push({ role: 'user', content: userContent }); 
   
-  removeAttachedImage(); // Bersihkan lampiran
+  removeAttachedImage(); 
   activeSearchSources = []; 
   showTyping();
   

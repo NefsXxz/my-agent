@@ -55,70 +55,36 @@ h1, h2, h3, .brand-text, .btn-icon, button, .title-font {
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 1px;
 }
-.font-anton { font-family: 'Anton', sans-serif; letter-spacing: 0px; }
 
 header { 
   padding: 10px 20px; 
   background: var(--black); 
   border-bottom: var(--border-red); 
   display: flex; gap: 12px; align-items: center; flex-wrap: wrap; 
-  z-index: 10;
-  position: relative;
+  z-index: 10; position: relative;
 }
-header::after {
-  content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 3px; background: var(--black); z-index: -1;
-}
+header::after { content: ''; position: absolute; bottom: -6px; left: 0; right: 0; height: 3px; background: var(--black); z-index: -1; }
 
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 22px; margin-right: 8px; }
-.brand-icon { 
-  width: 36px; height: 36px; background: var(--red); color: var(--white);
-  display: flex; align-items: center; justify-content: center; font-size: 20px; 
-  border: var(--border-thick); box-shadow: 3px 3px 0 var(--white);
-  transform: rotate(-5deg);
-}
+.brand-icon { width: 36px; height: 36px; background: var(--red); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 20px; border: var(--border-thick); box-shadow: 3px 3px 0 var(--white); transform: rotate(-5deg); }
 
 .select-wrapper { position: relative; display: flex; align-items: center; }
 .select-icon { position: absolute; left: 10px; font-size: 16px; pointer-events: none; }
-header select, header input, .btn-icon { 
-  padding: 8px 12px; 
-  border: var(--border-thick); 
-  background: var(--off-white); 
-  color: var(--black); 
-  font-size: 15px; 
-  font-family: inherit; 
-  font-weight: 700;
-  outline: none; 
-  appearance: none; 
-  transition: transform 0.1s, box-shadow 0.1s; 
-}
+header select, header input, .btn-icon { padding: 8px 12px; border: var(--border-thick); background: var(--off-white); color: var(--black); font-size: 15px; font-family: inherit; font-weight: 700; outline: none; appearance: none; transition: transform 0.1s, box-shadow 0.1s; }
 header select:focus, header input:focus { border-color: var(--red); }
 
 header select.with-icon { padding-left: 34px; min-width: 170px; cursor: pointer; }
 header select:not(.with-icon) { cursor: pointer; }
 #model { flex: 1; min-width: 160px; }
 
-.btn-icon { 
-  cursor: pointer; display: inline-flex; align-items: center; gap: 6px; 
-  background: var(--red); color: var(--white); border-color: var(--black);
-  box-shadow: 3px 3px 0 var(--black);
-  transform: translate(0,0);
-}
+.btn-icon { cursor: pointer; display: inline-flex; align-items: center; gap: 6px; background: var(--red); color: var(--white); border-color: var(--black); box-shadow: 3px 3px 0 var(--black); transform: translate(0,0); }
 .btn-icon:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
 .btn-icon:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--black); }
 .btn-icon.danger { background: var(--yellow); color: var(--black); }
 
-.badge { 
-  background: var(--black); color: var(--yellow); 
-  border: 2px solid var(--yellow);
-  padding: 1px 6px; font-size: 13px; font-weight: bold; 
-}
+.badge { background: var(--black); color: var(--yellow); border: 2px solid var(--yellow); padding: 1px 6px; font-size: 13px; font-weight: bold; }
 
-#tokenBar { 
-  padding: 8px 20px; 
-  background: var(--black-2); 
-  border-bottom: 2px dashed var(--off-white); 
-  display: flex; gap: 16px; align-items: center; font-size: 13px; flex-shrink: 0; 
-}
+#tokenBar { padding: 8px 20px; background: var(--black-2); border-bottom: 2px dashed var(--off-white); display: flex; gap: 16px; align-items: center; font-size: 13px; flex-shrink: 0; }
 .stat { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--off-white); text-transform: uppercase;}
 #tokenTrack { flex: 1; height: 10px; background: var(--black); border: 2px solid var(--off-white); overflow: hidden; min-width: 100px; }
 #tokenFill { height: 100%; width: 0%; background: var(--red); transition: width 0.4s ease; }
@@ -127,38 +93,16 @@ header select:not(.with-icon) { cursor: pointer; }
 
 .layout { flex: 1; display: flex; overflow: hidden; position: relative; }
 
-aside { 
-  width: 280px; 
-  background: var(--black-2); 
-  border-right: 4px solid var(--red); 
-  flex-shrink: 0; 
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-  display: flex; flex-direction: column; 
-  z-index: 5; 
-}
+aside { width: 280px; background: var(--black-2); border-right: 4px solid var(--red); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; z-index: 5; }
 .sb-section { padding: 16px; border-bottom: 2px dashed #333; }
 .sb-section:last-child { border-bottom: none; flex: 1; overflow-y: auto; }
 .sb-section h3 { font-size: 18px; color: var(--yellow); margin-bottom: 12px; display: flex; justify-content: space-between; text-transform: uppercase; }
 
-.btn-new { 
-  width: 100%; padding: 12px; 
-  background: var(--red); color: var(--white); 
-  border: var(--border-thick); cursor: pointer; font-size: 18px; 
-  transition: 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; 
-  box-shadow: 4px 4px 0 var(--white);
-  text-transform: uppercase;
-}
+.btn-new { width: 100%; padding: 12px; background: var(--red); color: var(--white); border: var(--border-thick); cursor: pointer; font-size: 18px; transition: 0.1s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 4px 4px 0 var(--white); text-transform: uppercase; }
 .btn-new:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--white); }
 .btn-new:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--white); }
 
-.chat-item { 
-  padding: 10px 12px; background: var(--off-white); color: var(--black); 
-  margin-bottom: 8px; font-size: 14px; font-weight: 600;
-  display: flex; justify-content: space-between; align-items: center; gap: 8px; 
-  cursor: pointer; border: var(--border-thick); 
-  transition: 0.15s; position: relative; overflow: hidden;
-  box-shadow: 3px 3px 0 var(--red);
-}
+.chat-item { padding: 10px 12px; background: var(--off-white); color: var(--black); margin-bottom: 8px; font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; border: var(--border-thick); transition: 0.15s; position: relative; overflow: hidden; box-shadow: 3px 3px 0 var(--red); }
 .chat-item:nth-child(even) { transform: rotate(1deg); }
 .chat-item:nth-child(odd) { transform: rotate(-1deg); }
 .chat-item:hover { transform: scale(1.02) rotate(0deg); box-shadow: 5px 5px 0 var(--yellow); background: var(--white); }
@@ -177,102 +121,45 @@ aside input[type=file]::file-selector-button:hover { background: var(--yellow); 
 
 main { flex: 1; overflow-y: auto; padding: 30px 20px; display: flex; flex-direction: column; gap: 24px; scroll-behavior: smooth; position: relative; }
 
-.msg { 
-  max-width: 85%; padding: 16px 20px; 
-  line-height: 1.5; font-size: 16px; font-weight: 500;
-  position: relative; animation: slideUp 0.2s ease; word-wrap: break-word; 
-  border: var(--border-thick);
-}
+.msg { max-width: 85%; padding: 16px 20px; line-height: 1.5; font-size: 16px; font-weight: 500; position: relative; animation: slideUp 0.2s ease; word-wrap: break-word; border: var(--border-thick); }
 @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.msg.user { 
-  align-self: flex-end; 
-  background: var(--red); color: var(--white); 
-  box-shadow: -5px -5px 0 var(--black); 
-  transform: rotate(1deg);
-}
-.msg.assistant { 
-  align-self: flex-start; 
-  background: var(--off-white); color: var(--black); 
-  box-shadow: 5px 5px 0 var(--black); 
-  transform: rotate(-1deg);
-}
-.msg.assistant::before { 
-  content: 'AI //'; position: absolute; left: 10px; top: -12px; 
-  background: var(--yellow); color: var(--black); 
-  font-family: 'Bebas Neue'; font-size: 16px; font-weight: bold;
-  padding: 2px 8px; border: 2px solid var(--black);
-  transform: rotate(-3deg);
-}
+.msg.user { align-self: flex-end; background: var(--red); color: var(--white); box-shadow: -5px -5px 0 var(--black); transform: rotate(1deg); }
+.msg.assistant { align-self: flex-start; background: var(--off-white); color: var(--black); box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg); }
+.msg.assistant::before { content: 'AI //'; position: absolute; left: 10px; top: -12px; background: var(--yellow); color: var(--black); font-family: 'Bebas Neue'; font-size: 16px; font-weight: bold; padding: 2px 8px; border: 2px solid var(--black); transform: rotate(-3deg); }
 
-.msg.tool { 
-  align-self: flex-start; background: var(--black); border: 2px dashed var(--yellow); 
-  font-size: 13px; font-family: monospace; color: var(--yellow); 
-  padding: 8px 12px; margin-left: 20px;
-}
-.msg.error { 
-  align-self: center; background: var(--yellow); border: var(--border-thick); color: var(--black); 
-  font-size: 14px; font-weight: 700; padding: 12px 20px; text-align: center; box-shadow: 4px 4px 0 var(--black); 
-  transform: rotate(-2deg);
-}
-.msg.memory { 
-  align-self: center; background: var(--off-white); border: 2px solid var(--red); color: var(--red); 
-  font-size: 13px; font-weight: bold; padding: 6px 16px; transform: rotate(2deg); box-shadow: 3px 3px 0 var(--black);
-}
+.msg.tool { align-self: flex-start; background: var(--black); border: 2px dashed var(--yellow); font-size: 13px; font-family: monospace; color: var(--yellow); padding: 8px 12px; margin-left: 20px; }
+.msg.error { align-self: center; background: var(--yellow); border: var(--border-thick); color: var(--black); font-size: 14px; font-weight: 700; padding: 12px 20px; text-align: center; box-shadow: 4px 4px 0 var(--black); transform: rotate(-2deg); }
+.msg.memory { align-self: center; background: var(--off-white); border: 2px solid var(--red); color: var(--red); font-size: 13px; font-weight: bold; padding: 6px 16px; transform: rotate(2deg); box-shadow: 3px 3px 0 var(--black); }
 
-.typing { 
-  align-self: flex-start; background: var(--off-white); border: var(--border-thick); 
-  padding: 16px 20px; display: flex; gap: 6px; align-items: center; 
-  box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg);
-}
+/* CODE BLOCK & DOWNLOAD BUTTON */
+pre { background: var(--black); color: var(--off-white); padding: 12px; border: 3px solid var(--black); overflow-x: auto; margin: 12px 0; font-family: monospace; font-size: 13px; position: relative; box-shadow: 4px 4px 0 var(--red); }
+.download-btn { display: inline-block; background: var(--yellow); color: var(--black); padding: 6px 12px; font-family: 'Bebas Neue'; font-size: 16px; border: 2px solid var(--black); cursor: pointer; margin-bottom: 8px; font-weight: bold; transition: 0.1s; box-shadow: 2px 2px 0 var(--black); text-transform: uppercase; }
+.download-btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--black); background: var(--white); }
+
+.typing { align-self: flex-start; background: var(--off-white); border: var(--border-thick); padding: 16px 20px; display: flex; gap: 6px; align-items: center; box-shadow: 5px 5px 0 var(--black); transform: rotate(-1deg); }
 .typing::before { content: 'THINKING...'; font-family: 'Bebas Neue'; color: var(--black); margin-right: 10px; font-size: 16px; }
 .typing span { width: 8px; height: 8px; background: var(--red); animation: bounce 1s infinite alternate; }
 .typing span:nth-child(2) { animation-delay: 0.2s; }
 .typing span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-6px); } }
 
-#chatPlaceholder { 
-  color: var(--off-white); text-align: center; margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; 
-  border: 4px dashed var(--red); padding: 40px; transform: rotate(-2deg); background: rgba(0,0,0,0.5);
-}
+#chatPlaceholder { color: var(--off-white); text-align: center; margin: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; border: 4px dashed var(--red); padding: 40px; transform: rotate(-2deg); background: rgba(0,0,0,0.5); }
 #chatPlaceholder .ph-icon { font-size: 60px; color: var(--yellow); margin-bottom: 10px; font-family: 'Anton'; }
 #chatPlaceholder .ph-title { font-size: 32px; font-family: 'Anton'; letter-spacing: 2px; color: var(--white); text-transform: uppercase; }
 #chatPlaceholder .ph-sub { font-size: 16px; font-weight: 600; }
 
-footer { 
-  padding: 16px 20px; 
-  background: var(--black-2); 
-  border-top: 4px solid var(--red); 
-  display: flex; flex-direction: column; gap: 12px; 
-  flex-shrink: 0; 
-}
+footer { padding: 16px 20px; background: var(--black-2); border-top: 4px solid var(--red); display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
 .input-row { display: flex; gap: 12px; align-items: flex-end; width: 100%; }
 
-footer textarea { 
-  flex: 1; padding: 14px 20px; 
-  border: var(--border-thick); 
-  background: var(--off-white); color: var(--black); 
-  resize: none; min-height: 54px; max-height: 200px; 
-  font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600;
-  line-height: 1.4; outline: none; 
-}
+footer textarea { flex: 1; padding: 14px 20px; border: var(--border-thick); background: var(--off-white); color: var(--black); resize: none; min-height: 54px; max-height: 200px; font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.4; outline: none; }
 footer textarea:focus { border-color: var(--yellow); box-shadow: inset 0 0 0 2px var(--yellow); }
 
-footer .btn-attach { 
-  height: 54px; width: 54px; background: var(--yellow); border: var(--border-thick); color: var(--black); 
-  display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; flex-shrink: 0; 
-  transition: 0.1s; box-shadow: 3px 3px 0 var(--black);
-}
+footer .btn-attach { height: 54px; width: 54px; background: var(--yellow); border: var(--border-thick); color: var(--black); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; flex-shrink: 0; transition: 0.1s; box-shadow: 3px 3px 0 var(--black); }
 footer .btn-attach:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--black); }
 footer .btn-attach:active { transform: translate(2px,2px); box-shadow: none; }
 
-footer button#send { 
-  height: 54px; padding: 0 30px; 
-  background: var(--red); color: var(--white); border: var(--border-thick); 
-  cursor: pointer; font-size: 24px; font-family: 'Bebas Neue';
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
-  box-shadow: 4px 4px 0 var(--black); transition: 0.1s; text-transform: uppercase;
-}
+footer button#send { height: 54px; padding: 0 30px; background: var(--red); color: var(--white); border: var(--border-thick); cursor: pointer; font-size: 24px; font-family: 'Bebas Neue'; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 4px 4px 0 var(--black); transition: 0.1s; text-transform: uppercase; }
 footer button#send:hover:not(:disabled) { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); background: var(--yellow); color: var(--black); }
 footer button#send:active:not(:disabled) { transform: translate(2px,2px); box-shadow: 0px 0px 0 var(--black); }
 footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
@@ -284,32 +171,14 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 .msg-link { color: var(--red); font-weight: 700; text-decoration: underline; }
 .msg-link:hover { color: var(--yellow); background: var(--black); padding: 0 4px; }
 
-/* =========================================
-   MODALS (RANSOM / COMIC PANELS)
-========================================= */
-.overlay { 
-  position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); 
-  display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; 
-}
+.overlay { position: fixed; inset: 0; background: rgba(10, 10, 10, 0.85); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
 .overlay.active { display: flex; }
-.modal { 
-  background: var(--off-white); color: var(--black); border: 4px solid var(--black); 
-  padding: 24px; width: 100%; max-width: 480px; 
-  box-shadow: 12px 12px 0 var(--red); animation: scaleIn 0.2s cubic-bezier(.17,.89,.32,1.28); 
-}
+.modal { background: var(--off-white); color: var(--black); border: 4px solid var(--black); padding: 24px; width: 100%; max-width: 480px; box-shadow: 12px 12px 0 var(--red); animation: scaleIn 0.2s cubic-bezier(.17,.89,.32,1.28); }
 @keyframes scaleIn { from { transform: scale(0.8) rotate(5deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 .modal h3 { font-size: 28px; margin-bottom: 16px; text-transform: uppercase; border-bottom: 4px solid var(--red); padding-bottom: 8px; }
-.modal input, .modal textarea { 
-  width: 100%; padding: 12px; margin-bottom: 12px; 
-  background: var(--white); border: 3px solid var(--black); color: var(--black); 
-  font-size: 15px; font-family: inherit; font-weight: 600; outline: none; 
-}
+.modal input, .modal textarea { width: 100%; padding: 12px; margin-bottom: 12px; background: var(--white); border: 3px solid var(--black); color: var(--black); font-size: 15px; font-family: inherit; font-weight: 600; outline: none; }
 .modal input:focus, .modal textarea:focus { border-color: var(--red); box-shadow: 0 0 0 2px var(--red); }
-.modal button { 
-  width: 100%; padding: 14px; background: var(--black); color: var(--white); 
-  border: 3px solid var(--black); cursor: pointer; font-size: 20px; 
-  margin-bottom: 8px; transition: 0.1s; font-family: 'Bebas Neue'; letter-spacing: 1px;
-}
+.modal button { width: 100%; padding: 14px; background: var(--black); color: var(--white); border: 3px solid var(--black); cursor: pointer; font-size: 20px; margin-bottom: 8px; transition: 0.1s; font-family: 'Bebas Neue'; letter-spacing: 1px; }
 .modal button:hover { background: var(--red); transform: translate(-2px,-2px); box-shadow: 4px 4px 0 var(--black); }
 .modal button:active { transform: translate(2px,2px); box-shadow: none; }
 .modal button.secondary { background: var(--off-white); color: var(--black); border: 3px solid var(--black); }
@@ -319,45 +188,24 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 .key-item code { background: var(--black); padding: 4px 8px; font-size: 12px; color: var(--yellow); font-family: monospace; }
 .empty-state { color: var(--black); font-size: 15px; font-weight: 600; text-align: center; padding: 20px; border: 2px dashed var(--black); }
 
-/* Spinner */
 .spinner { width: 20px; height: 20px; border: 3px solid var(--black); border-top-color: var(--white); animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* =========================================
-   SOURCE PILL (PERPLEXITY STYLE REVAMPED)
-========================================= */
 .sources-container { margin-top: 16px; }
-.source-pill-new {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--yellow); color: var(--black);
-  border: 3px solid var(--black); padding: 6px 14px 6px 6px;
-  cursor: pointer; transition: 0.1s; font-size: 14px; font-weight: 800;
-  box-shadow: 3px 3px 0 var(--black); text-transform: uppercase;
-}
+.source-pill-new { display: inline-flex; align-items: center; gap: 10px; background: var(--yellow); color: var(--black); border: 3px solid var(--black); padding: 6px 14px 6px 6px; cursor: pointer; transition: 0.1s; font-size: 14px; font-weight: 800; box-shadow: 3px 3px 0 var(--black); text-transform: uppercase; }
 .source-pill-new:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); background: var(--white); }
 .source-pill-new:active { transform: translate(2px, 2px); box-shadow: none; }
 .favicon-stack { display: flex; align-items: center; }
-.favicon-stack img {
-  width: 22px; height: 22px; border: 2px solid var(--black); background: #fff; object-fit: contain;
-}
+.favicon-stack img { width: 22px; height: 22px; border: 2px solid var(--black); background: #fff; object-fit: contain; }
 .favicon-stack img:not(:first-child) { margin-left: -8px; }
 
-/* Modal List Sumber */
-.source-list-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; background: var(--white); border: 3px solid var(--black);
-  margin-bottom: 8px; text-decoration: none; color: var(--black); transition: 0.1s;
-  box-shadow: 3px 3px 0 var(--red);
-}
+.source-list-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--white); border: 3px solid var(--black); margin-bottom: 8px; text-decoration: none; color: var(--black); transition: 0.1s; box-shadow: 3px 3px 0 var(--red); }
 .source-list-item:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--red); background: var(--yellow); }
 .source-list-item img { width: 24px; height: 24px; border: 2px solid var(--black); background: #fff; }
 .source-list-item div { display: flex; flex-direction: column; overflow: hidden; }
 .source-list-item .src-title { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .source-list-item .src-domain { font-size: 12px; font-weight: 600; color: var(--red); }
 
-/* =========================================
-   MOBILE RESPONSIVE
-========================================= */
 #sidebarToggle { display: none; }
 
 @media (max-width: 768px) {
@@ -382,9 +230,6 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
 </head>
 <body>
 
-<!-- =========================================
-     HEADER / GAME UI
-========================================= -->
 <header>
   <button id="sidebarToggle" class="btn-icon" onclick="toggleSidebar()">☰</button>
   <div class="brand"><div class="brand-icon">P5</div><span class="brand-text">PHANTOM AI</span></div>
@@ -409,18 +254,12 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   <button class="btn-icon danger" onclick="doLogout()">KELUAR</button>
 </header>
 
-<!-- =========================================
-     TOKEN BAR
-========================================= -->
 <div id="tokenBar">
   <span class="stat">📊 <strong id="tokenCount">0</strong> / <span id="tokenLimit">128k</span> TOKEN</span>
   <div id="tokenTrack"><div id="tokenFill"></div></div>
   <span id="quotaInfo"></span>
 </div>
 
-<!-- =========================================
-     MAIN LAYOUT
-========================================= -->
 <div class="layout">
   <aside id="sidebar">
     <div class="sb-section"><button class="btn-new" onclick="newChat()">＋ NEW CHAT</button></div>
@@ -438,9 +277,6 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   </main>
 </div>
 
-<!-- =========================================
-     FOOTER / INPUT
-========================================= -->
 <footer>
   <div class="image-preview-container" id="imagePreviewContainer">
     <img id="imagePreviewImg" src="" alt="Preview">
@@ -454,9 +290,6 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   </div>
 </footer>
 
-<!-- =========================================
-     MODALS
-========================================= -->
 <div id="sourcesOverlay" class="overlay">
   <div class="modal">
     <h3>// SOURCES FOUND</h3>
@@ -497,11 +330,7 @@ footer button#send:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: non
   </div>
 </div>
 
-<!-- =========================================
-     JAVASCRIPT LOGIC
-========================================= -->
 <script>
-// Setup PDF.js Worker
 if (typeof pdfjsLib !== 'undefined') {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
@@ -561,13 +390,8 @@ async function refreshFiles() {
   files.forEach(f => { const div = document.createElement('div'); div.className = 'file'; const span = document.createElement('span'); span.title = f.name; span.innerHTML = `${f.name.length > 18 ? f.name.slice(0,18)+'…' : f.name} <span style="color:var(--red);font-size:10px;">· ${fmtSize(f.size)}</span>`; const btn = document.createElement('button'); btn.textContent = '✕'; btn.onclick = async () => { await dbDel(f.id); await refreshFiles(); }; div.appendChild(span); div.appendChild(btn); list.appendChild(div); });
 }
 
-// =========================================
-// FUNGSI EKSTRAKSI FILE (PDF, DOCX, ZIP, BINARY)
-// =========================================
 async function extractTextFromFile(file) {
   const name = file.name.toLowerCase();
-  
-  // 1. Ekstrak PDF
   if (name.endsWith('.pdf')) {
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -579,15 +403,11 @@ async function extractTextFromFile(file) {
     }
     return text;
   }
-  
-  // 2. Ekstrak DOCX (Word)
   if (name.endsWith('.docx')) {
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.extractRawText({ arrayBuffer });
     return result.value;
   }
-  
-  // 3. Ekstrak ZIP / APK / JAR
   if (name.endsWith('.zip') || name.endsWith('.apk') || name.endsWith('.jar')) {
     const arrayBuffer = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(arrayBuffer);
@@ -596,7 +416,6 @@ async function extractTextFromFile(file) {
     for (const [filename, fileData] of Object.entries(zip.files)) {
       if (count > 30) { text += '\n... (dipotong karena terlalu banyak file)'; break; }
       if (!fileData.dir) {
-        // Ambil file teks atau manifest di dalam zip
         if (/\.(md|txt|json|js|ts|jsx|tsx|py|html|css|csv|xml|yaml|yml|sh|java|c|cpp|h|go|rs|rb|php|sql|log|env|toml|ini|smali)$/i.test(filename) || filename.endsWith('AndroidManifest.xml')) {
           try {
             const content = await fileData.async('string');
@@ -609,14 +428,11 @@ async function extractTextFromFile(file) {
     if (count === 0) text += 'Tidak ada file teks yang bisa dibaca di dalam arsip ini.';
     return text;
   }
-  
-  // 4. Ekstrak Strings dari BINARY (.so, .exe, .dll, .bin)
   if (name.endsWith('.so') || name.endsWith('.exe') || name.endsWith('.bin') || name.endsWith('.dll')) {
     const arrayBuffer = await file.arrayBuffer();
     const bytes = new Uint8Array(arrayBuffer);
     let text = '';
     let currentString = '';
-    // Membaca teks ASCII yang ukurannya >= 4 karakter (seperti perintah `strings`)
     for (let i = 0; i < bytes.length; i++) {
       const charCode = bytes[i];
       if ((charCode >= 32 && charCode <= 126)) {
@@ -629,29 +445,20 @@ async function extractTextFromFile(file) {
     if (currentString.length >= 4) text += currentString + '\n';
     return `=== STRINGS DARI FILE BINARY (${file.name}) ===\n` + text.slice(0, 30000);
   }
-
-  // 5. Fallback: File Teks Biasa
   return await file.text();
 }
 
 $('#fileInput').onchange = async e => {
   const selected = Array.from(e.target.files); let total = files.reduce((s, f) => s + f.size, 0);
-  
   for (const file of selected) {
     if (files.length >= MAX_FILES) { alert('Maksimal 20 file.'); break; }
     if (total + file.size > MAX_TOTAL) { alert('Total > 500MB.'); break; }
-    
     const id = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2);
     const name = file.name.toLowerCase();
-    
-    // Cek apakah file perlu diekstrak
     const isExtractable = isTextFile(file) || /\.(pdf|docx|zip|apk|jar|so|exe|bin|dll)$/i.test(name);
-    
     if (isExtractable) {
       const originalText = $('#fileInput').nextElementSibling ? $('#fileInput').nextElementSibling.innerHTML : '';
-      // UI Loading (Ubah label)
       if($('#fileInput').nextElementSibling) $('#fileInput').nextElementSibling.innerHTML = 'Extracting ' + file.name + '...';
-      
       try {
         const content = await extractTextFromFile(file);
         await dbPut(id, { name: file.name, size: file.size, type: file.type, isText: true, content });
@@ -662,7 +469,6 @@ $('#fileInput').onchange = async e => {
         if($('#fileInput').nextElementSibling) $('#fileInput').nextElementSibling.innerHTML = originalText;
       }
     } else {
-      // File binary yang bukan teks (misal gambar, audio)
       const buf = await file.arrayBuffer();
       const bytes = new Uint8Array(buf);
       let bin = ''; const CH = 0x8000;
@@ -751,15 +557,47 @@ async function switchChat(id) { currentChatId = id; const r = await fetch(`/api/
 async function deleteChat(id) { if (!confirm('Hapus record ini?')) return; await fetch(`/api/chats?id=${id}`, { method: 'DELETE' }); if (currentChatId === id) { currentChatId = null; messages = []; resetUsage(); renderMessages(); } await loadChats(); if (chats.length > 0) await switchChat(chats[0].id); else await newChat(); }
 async function saveCurrentChat() { if (!currentChatId) return; let title; const cur = chats.find(c => c.id === currentChatId); if (cur && (cur.title === 'NEW RECORD' || !cur.title)) { const first = messages.find(m => m.role === 'user'); if (first) { let textContent = first.content; if (Array.isArray(textContent)) textContent = textContent.find(c => c.type === 'text')?.text || 'IMAGE'; title = textContent.slice(0, 60) + (textContent.length > 60 ? '…' : ''); } } const body = { messages }; if (title) body.title = title; await fetch(`/api/chats?id=${currentChatId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }); await loadChats(); }
 
+// FITUR DOWNLOAD FILE DARI AI
+function downloadTextAsFile(text, filename) {
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 function formatMarkdown(text) {
   if (!text) return '';
+  
+  // 1. Ekstrak Code Block buat tombol Download
   let html = escapeHtml(text);
+  
+  // Regex buat nangkep kode di dalam ``` ``` (Code Block)
+  html = html.replace(/```([a-z]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+    const id = 'code_' + Math.random().toString(36).substring(7);
+    const extMap = { js: 'js', javascript: 'js', python: 'py', py: 'py', html: 'html', css: 'css', json: 'json', java: 'java', kotlin: 'kt', xml: 'xml' };
+    const ext = extMap[lang.toLowerCase()] || 'txt';
+    const filename = `ai_output.${ext}`;
+    
+    // Simpan kode ke global object biar bisa diakses tombol
+    window._codeStore = window._codeStore || {};
+    window._codeStore[id] = { code: code, filename: filename };
+    
+    return `<pre><button class="download-btn" onclick="downloadTextAsFile(window._codeStore['${id}'].code, window._codeStore['${id}'].filename)">⬇ DOWNLOAD FILE</button>\n<code>${code}</code></pre>`;
+  });
+
+  // 2. Format Gambar & Link
   html = html.replace(/!\[(.*?)\]\((.*?)\)/g, (match, alt, url) => `<img src="${url}" alt="${alt}" class="msg-image" onerror="this.style.display='none'">`);
   html = html.replace(/\[(.*?)\]\((.*?)\)/g, (match, text, url) => {
     const isImage = url.match(/\.(jpeg|jpg|gif|png|webp)/i) || url.includes('images.unsplash.com') || url.includes('cdn.');
     if (isImage) return `<img src="${url}" alt="${text}" class="msg-image" title="${text}" onerror="this.style.display='none'">`;
     return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="msg-link">${text}</a>`;
   });
+  
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
   html = html.replace(/\n/g, '<br>');
@@ -878,7 +716,9 @@ function setSendBusy(isBusy) { const btn = $('#send'); btn.disabled = isBusy; if
 
 const SYSTEM_PROMPT = `Kamu adalah AI agent premium yang cerdas dan membantu. User bisa mengupload file, gambar, dan menyimpan chat lama. 
 Gunakan tool 'search_internet' jika butuh info terbaru. 
-PENTING: Jika kamu ingin menampilkan gambar ke user, WAJIB gunakan format Markdown Gambar: ![deskripsi](url_gambar). Jangan cuma kasih link biasa.
+PENTING: 
+1. Jika kamu ingin menampilkan gambar ke user, WAJIB gunakan format Markdown Gambar: ![deskripsi](url_gambar). 
+2. Jika kamu membuat kode program (seperti HTML, Python, dll), WAJIB bungkus kodenya dengan tiga backtick (contoh: \`\`\`html ... \`\`\`). Sistem kita akan otomatis membuatkan tombol Download untuk file tersebut.
 Jawab dengan gaya bahasa yang natural.`;
 
 const TOOLS = [
